@@ -12,10 +12,10 @@ export default function Register() {
   const [lastName, setLastName] = useState('');
 
   return (
-    <motion.div className='w-screen h-screen'
-      initial={{ opacity: 0.5, x: -50, scale: 0.9 }}
+    <motion.div classNames='w-full h-full'
+      initial={{ opacity: 0, x: -50, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0.5, x: -50, scale: 0.9 }}
+      exit={{ opacity: 0, x: -50, scale: 0.9 }}
       transition={{ duration: 0.2 }}
     >
       <section className="h-full gradient-form md:h-full w-full ">
