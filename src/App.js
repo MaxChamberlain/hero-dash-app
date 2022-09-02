@@ -1,15 +1,31 @@
 import './App.css';
 import './assets/main.css'
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import HomePage from './pages/HomePage/HomePage';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Splash from './pages/Splash/Splash';
+import { useEffect } from 'react';
+
 
 function App() {
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/') {
+      if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+        navigate('/home')
+      }
+    }else{
+      if(!JSON.parse(localStorage.getItem('@ViDash:_userInfo')) || !JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+        navigate('/')
+      }
+    }
+  }, [location.pathname])
 
   return (
     <>
@@ -17,6 +33,7 @@ function App() {
       <div className="App-header flex justify-center items-center font-mono">
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Splash />} />
             <Route exact path='/home' element={<HomePage /> } />
             <Route exact path='/login' element={<Login /> } /> 
             <Route exact path='/register' element={<Register /> } /> 
