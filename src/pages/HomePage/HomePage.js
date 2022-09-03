@@ -5,6 +5,7 @@ import PackagesWithPriceModal from "../../components/modals/PackagesWithPriceMod
 import Totals from "./components/Totals";
 import CustDatePicker from "../../components/CustDatePicker";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function HomePage(){
     const [dateRange, setDateRange] = useState({
@@ -13,10 +14,16 @@ export default function HomePage(){
     });
 
     return (
-        <div className='text-slate-50 w-screen p-5 h-screen py-20 text-black'>
+        <motion.div 
+            className='text-slate-50 w-screen p-5 h-screen py-20 text-black'
+            initial={{ x: -80, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -80, opacity: 0 }}
+            transition={{ duration: 0.2, delay: 0 }}
+        >
             <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
-            <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
-            <Totals dateRange={dateRange} setDateRange={setDateRange} />
+            {/* <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
+            <Totals dateRange={dateRange} setDateRange={setDateRange} /> */}
             <div className="flex flex-col md:flex-row justify-around align-start w-full">
                 <div className='w-full md:mr-2'>
                     <PicksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
@@ -25,7 +32,7 @@ export default function HomePage(){
                     <PacksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
                 </div>
             </div>
-            <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} />
-        </div>
+            {/* <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} /> */}
+        </motion.div>
     )
 }

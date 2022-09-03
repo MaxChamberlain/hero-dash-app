@@ -14,7 +14,7 @@ code {
 }
 
 *{
-  transition-duration: 0.5s opacity;
+  transition-duration: 0.5s opacity background-color;
 }
 
 @tailwind base;

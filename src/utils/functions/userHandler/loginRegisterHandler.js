@@ -8,7 +8,9 @@ export const handleRegister = async (first_name, last_name, email_address, passw
             {
             first_name, last_name, email_address, password, company_name, company_code
         })
+        console.log(data)
         localStorage.setItem('@ViDash:_userInfo', JSON.stringify(data))
+        window.location.reload()
         return data
     }catch(e){
         console.log(e)

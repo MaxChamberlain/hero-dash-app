@@ -114,18 +114,29 @@ export default function Register() {
                             {(email && confirmPassword && (password !== confirmPassword)) && <div className='text-red-500 text-xs'>Password does not match confirm password</div>}
                           </div>
                           <div className="mb-4">
-                            <input
-                              type="text"
-                              className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                              id="company-name-input"
-                              placeholder="Enter New Company Name"
-                              value={companyName}
-                              onChange={(e) => setCompanyName(e.target.value)}
-                            />
-                            {companyName && <div className='text-red-500 text-xs'>This cannot be changed later!</div>}
+                            {company_code === 'new' ? <>
+                              <input
+                                type="text"
+                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                id="company-name-input"
+                                placeholder="Enter New Company Name"
+                                value={companyName}
+                                onChange={(e) => setCompanyName(e.target.value)}
+                              />
+                              {companyName && <div className='text-red-500 text-xs'>This cannot be changed later!</div>}
+                            </> :
+                            <>
+                              <div className='text-sm text-gray-400 text-center'>
+                                Joining with company code
+                              </div>
+                              <div className='text-sm text-gray-400 text-center underline'>
+                                {company_code}
+                              </div>
+                            </>
+                            }
                           </div>
                           <div className="text-center pt-1 mb-12 pb-1">
-                            <button
+                            <motion.button
                               className="color-white inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
                               type="button"
                               data-mdb-ripple="true"
@@ -140,9 +151,11 @@ export default function Register() {
                                   color: 'white'
                                 }}
                                 onClick={() => (email && email.includes("@") && email.includes(".") && password && confirmPassword && firstName && lastName && (password === confirmPassword)) && handleRegister(firstName, lastName, email, password, companyName, company_code, setError)}
+                                animate={{ y: (email && email.includes("@") && email.includes(".") && password && confirmPassword && firstName && lastName && (password === confirmPassword)) ? -10 : 0, scale: (email && email.includes("@") && email.includes(".") && password && confirmPassword && firstName && lastName && (password === confirmPassword)) ? 1 : 0.9}}
+                                transition={{ duration: 0.1, delay: 0 }}
                             >
                               Sign Up
-                            </button>
+                            </motion.button>
                           </div>
                           <div className="flex items-center justify-between pb-6">
                             <p className="mb-0 mr-2">Already using ViDash?</p>

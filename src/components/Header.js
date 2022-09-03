@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import OptionsDropdown from "./OptionsDropdown";
 const logo = require("../assets/images/logo.png");
 
 export default function Header() {
@@ -30,6 +31,7 @@ export default function Header() {
             animate={{ rotate: navbarOpen ? 45 : 0, y: navbarOpen ? -10 : 0 }}
           />
         </svg>
+        {navbarOpen && <OptionsDropdown />}
       </motion.div>
       <div className='h-13'></div>
     </>

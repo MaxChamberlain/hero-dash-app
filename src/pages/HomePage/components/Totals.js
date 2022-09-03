@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getData } from "../../../utils/functions/temp_get_db_package_data"
+import Loading from '../../../components/Loading';
 
 export default function Totals({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange);
+            const returnedData = await getData('test', dateRange, setLoading);
             setData(returnedData)
         }
         refreshData()
@@ -14,7 +16,7 @@ export default function Totals({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange);
+            const returnedData = await getData('test', dateRange, setLoading);
             setData(returnedData)
         }
         refreshData()
@@ -23,6 +25,7 @@ export default function Totals({ dateRange, setDateRange }) {
     return(
         data && <div className='mt-10 bg-stone-200 p-2 rounded text-black md:text-xl text-lg flex justify-around items-center text-center'>
             
+        {loading ? <Loading /> : <>
         <div style={{
             width: 2,
         }}>
@@ -71,6 +74,7 @@ export default function Totals({ dateRange, setDateRange }) {
                 width: 2,
             }}>
             </div>
+        </>}
 
         </div>
     )

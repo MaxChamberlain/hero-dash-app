@@ -1,28 +1,31 @@
 const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL
 
-export const getData = async (company_code, startDate, endDate, setLoading, setError) => {
+export const getData = async (startDate, endDate, setLoading, setError) => {
+    const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
+    const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
     setLoading(true)
     startDate = new Date(startDate.setHours(0,0,0,0))
     endDate = new Date(endDate.setHours(23,59,59,999))
     try{
 
         const { data: pickData } = await axios.post(
-            `${URL}/picks/getall`,
+            `${URL}/pickdata/getall`,
             {
                 company_code,
                 startDate,
-                endDate
+                endDate,
             },
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             }
         )
 
         const { data: packData } = await axios.post(
-            `${URL}/packs/getall`,
+            `${URL}/packdata/getall`,
             {
                 company_code,
                 startDate,
@@ -30,7 +33,8 @@ export const getData = async (company_code, startDate, endDate, setLoading, setE
             },
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             }
         )
@@ -53,6 +57,10 @@ export const getData = async (company_code, startDate, endDate, setLoading, setE
         setLoading(false)
         return newData
     }catch(err){
+        if(err.response.status === 403){
+            localStorage.removeItem('@ViDash:_userInfo')
+            window.location.reload()
+        }
         setError(err.response.data.message)
         console.log(err)
     }

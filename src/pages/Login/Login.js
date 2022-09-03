@@ -67,7 +67,7 @@ export default function Login() {
                             />
                           </div>
                           <div className="text-center pt-1 mb-12 pb-1">
-                            <button
+                            <motion.button
                               className="color-white inline-block px-6 py-2.5 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
                               type="button"
                               data-mdb-ripple="true"
@@ -81,10 +81,12 @@ export default function Login() {
                                   opacity: (email && password) ? 1 : 0.5,
                                   color: 'white'
                                 }}
-                                onClick={() => handleLogin(email, password)}
+                                onClick={() => (email && password) && handleLogin(email, password)}
+                                animate={{ y: (email && password) ? -10 : 0, scale: (email && password) ? 1 : 0.9 }}
+                                transition={{ duration: 0.1, delay: 0 }}
                             >
                               Log in
-                            </button>
+                            </motion.button>
                             <a className="text-gray-500" href="#!">Forgot password?</a>
                           </div>
                           <div className="flex items-center justify-between pb-6">

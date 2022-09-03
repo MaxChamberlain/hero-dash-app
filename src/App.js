@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage/HomePage';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Splash from './pages/Splash/Splash';
+import Settings from './pages/Settings/Settings';
+import User from './pages/User/User';
 import { useEffect } from 'react';
 
 
@@ -21,7 +23,7 @@ function App() {
         navigate('/home')
       }
     }else{
-      if(!JSON.parse(localStorage.getItem('@ViDash:_userInfo')) || !JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+      if(!(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token)) {
         navigate('/')
       }
     }
@@ -34,9 +36,11 @@ function App() {
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Splash />} />
-            <Route exact path='/home' element={<HomePage /> } />
-            <Route exact path='/login' element={<Login /> } /> 
-            <Route exact path='/register' element={<Register /> } /> 
+            <Route path='/home' element={<HomePage /> } />
+            <Route path='/login' element={<Login /> } /> 
+            <Route path='/register' element={<Register /> } /> 
+            <Route path='/settings' element={<Settings /> } />
+            <Route path='/user/:id' element={<User /> } />
           </Routes>
         </AnimatePresence>
       </div>

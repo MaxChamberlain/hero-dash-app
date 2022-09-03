@@ -3,6 +3,7 @@ import { getData } from "../../utils/functions/temp_get_db_person_data"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CustomizedLegend } from '../../assets/graphs/Legend';
 import { CustomTooltip } from '../../assets/graphs/Tooltip';
+import Loading from '../Loading';
 
 export default function PickerPerformanceChart({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange.startDate, dateRange.endDate);
+            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
             setData(returnedData.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
         }
         refreshData()
@@ -19,7 +20,7 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange.startDate, dateRange.endDate);
+            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
             setData(returnedData.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
         }
         refreshData()
@@ -31,18 +32,8 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
         }
     }, [error])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setError(true)
-        }, 10000)
-    }, [])
-
     if(loading){
-        return(
-            <div className='text-[#ff8000]'>
-                Loading...
-            </div>
-        )
+        return <Loading />
     }else if(error){
         return(
             <div className='text-red'>

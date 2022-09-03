@@ -4,17 +4,19 @@ const URL = process.env.REACT_APP_API_URL
 export async function getData(company_code, dateRange, setLoading, setError) {
     try{
         setLoading(true)
+        const token = JSON.parse(localStorage.getItem('token')).token
         const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
         const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
         const { data } = await axios.post(
             URL + '/packages/getall',
             {
                 startDate,
-                endDate
+                endDate,
             },
             {
                 headers:{
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             }
         )

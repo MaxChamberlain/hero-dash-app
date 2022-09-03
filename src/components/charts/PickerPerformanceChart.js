@@ -3,6 +3,7 @@ import { getData } from "../../utils/functions/temp_get_db_data"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CustomizedLegend } from '../../assets/graphs/Legend';
 import { CustomTooltip } from '../../assets/graphs/Tooltip';
+import Loading from '../Loading';
 
 export default function PickerPerformanceChart({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
@@ -31,16 +32,8 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
         }
     }, [error])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setError(true)
-        }, 10000)
-    }, [])
-
     if(loading){
-        return(
-            <div>Loading...</div>
-        )
+        return <Loading />
     }else if(error){
         return(
             <div>Error</div>
