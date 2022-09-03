@@ -23,7 +23,6 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
                 }
             }
         )
-        console.log('pickData', pickData)
 
         const { data: packData } = await axios.post(
             `${URL}/packdata/getall`,

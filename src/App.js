@@ -1,6 +1,6 @@
 import './App.css';
 import './assets/main.css'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import HomePage from './pages/HomePage/HomePage';
@@ -17,15 +17,27 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  let isAdmin = false
+  let canManage = false
+
   useEffect(() => {
-    if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/') {
-      if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+      if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/') {
         navigate('/home')
+        window.location.href = '/home'
       }
     }else{
-      if(!(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token)) {
+      if(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/') {
         navigate('/')
+        window.location.href = '/'
       }
+    }
+    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) {
+      isAdmin = true
+      canManage = true
+    }
+    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage){
+      canManage = true
     }
   }, [location.pathname])
 
@@ -39,8 +51,8 @@ function App() {
             <Route path='/home' element={<HomePage /> } />
             <Route path='/login' element={<Login /> } /> 
             <Route path='/register' element={<Register /> } /> 
-            <Route path='/settings' element={<Settings /> } />
-            <Route path='/user/:id' element={<User /> } />
+            <Route path='/settings' element={((JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage) || (JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin)) ? <Settings /> : <Navigate replace to={'/'} />} />
+            <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
           </Routes>
         </AnimatePresence>
       </div>

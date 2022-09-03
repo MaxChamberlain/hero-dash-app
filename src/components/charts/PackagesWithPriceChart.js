@@ -12,7 +12,7 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange, setLoading, setError);
+            const returnedData = await getData(dateRange, setLoading, setError);
             setData(returnedData)
         }
         refreshData()
@@ -20,7 +20,7 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange, setLoading, setError);
+            const returnedData = await getData(dateRange, setLoading, setError);
             setData(returnedData)
         }
         refreshData()

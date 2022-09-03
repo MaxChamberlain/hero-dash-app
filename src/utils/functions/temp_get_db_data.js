@@ -42,8 +42,8 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
         const dates = getUniqueDates(pickData, packData, startDate, endDate)
 
         const newData = dates.map(date => {
-            const filteredData = pickData.filter(item => new Date(item.updatedAt).toLocaleDateString('en-US') === date)
-            const filteredPackData = packData.filter(item => new Date(item.updatedAt).toLocaleDateString('en-US') === date)
+            const filteredData = pickData.filter(item => new Date(item.created_at).toLocaleDateString('en-US') === date)
+            const filteredPackData = packData.filter(item => new Date(item.created_at).toLocaleDateString('en-US') === date)
             return {
                 date: date,
                 name: `${new Date(date).toString().substring(0,3)}, ${new Date(date).toString().slice(4, 7)} ${new Date(date).getDate()}`,
@@ -68,7 +68,7 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
 
 const getUniqueDates = (pickData, packData, startDate, endDate) => {
     let dates = [...new Set(pickData.filter(e => new Date(new Date() - new Date(e.created_at)).getMonth() % 11 === 0).map(item => new Date(item.created_at).toLocaleDateString('en-US')))]
-    let temp = [...new Set(pickData.filter(e => new Date(new Date() - new Date(e.created_at)).getMonth() % 11 === 0).map(item => new Date(item.created_at).toLocaleDateString('en-US')))]
+    let temp = [...new Set(packData.filter(e => new Date(new Date() - new Date(e.created_at)).getMonth() % 11 === 0).map(item => new Date(item.created_at).toLocaleDateString('en-US')))]
         .forEach(date => {
             if(!dates.includes(date)){
                 dates.push(date)

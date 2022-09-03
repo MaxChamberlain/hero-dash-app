@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_package_data"
+import { getData } from "../utils/getTotals"
 import Loading from '../../../components/Loading';
 
 export default function Totals({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange, setLoading);
+            const returnedData = await getData(dateRange, setLoading, setError)
             setData(returnedData)
         }
         refreshData()
@@ -16,7 +17,7 @@ export default function Totals({ dateRange, setDateRange }) {
 
     useEffect(() => { 
         const refreshData = async () => {
-            const returnedData = await getData('test', dateRange, setLoading);
+            const returnedData = await getData(dateRange, setLoading, setError)
             setData(returnedData)
         }
         refreshData()

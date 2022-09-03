@@ -5,11 +5,13 @@ export async function getData(company_code, dateRange, setLoading, setError){
     try{
         setLoading(true)
         const token = JSON.parse(localStorage.getItem('token')).token
+        const company_code = JSON.parse(localStorage.getItem('token')).company_code
         const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
         const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
         const { data } = await axios.post(
             URL + '/packages/getall',
             {
+                company_code,
                 startDate,
                 endDate,
             },

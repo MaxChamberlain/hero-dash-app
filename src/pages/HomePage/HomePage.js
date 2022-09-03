@@ -22,8 +22,8 @@ export default function HomePage(){
             transition={{ duration: 0.2, delay: 0 }}
         >
             <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
-            {/* <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
-            <Totals dateRange={dateRange} setDateRange={setDateRange} /> */}
+            <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
+            <Totals dateRange={dateRange} setDateRange={setDateRange} />
             <div className="flex flex-col md:flex-row justify-around align-start w-full">
                 <div className='w-full md:mr-2'>
                     <PicksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
@@ -32,7 +32,7 @@ export default function HomePage(){
                     <PacksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
                 </div>
             </div>
-            {/* <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} /> */}
+            <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} />
         </motion.div>
     )
 }
