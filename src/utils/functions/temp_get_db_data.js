@@ -54,6 +54,7 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
             }
         })
 
+
         setLoading(false)
         return newData
     }catch(err){
@@ -84,5 +85,6 @@ const getUniqueDates = (pickData, packData, startDate, endDate) => {
             inputDates = inputDates.slice(0, inputDates.indexOf(e) - 1)
         }
     })
-    return dates
+    const totalDates = [...dates, ...inputDates]
+    return [...new Set(totalDates.map(e => e))].sort((a, b) => new Date(a) - new Date(b))
 }

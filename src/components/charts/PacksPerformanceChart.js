@@ -41,7 +41,7 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
     }else{
         return(
             <ResponsiveContainer width='100%' height='100%'>
-                <BarChart data={data}>
+                <BarChart data={data.filter(e => e.items_packed > 0)}>
                     <Legend content={CustomizedLegend} />
                     <XAxis dataKey="name" />
                     <YAxis />
