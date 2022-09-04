@@ -10,6 +10,7 @@ import Splash from './pages/Splash/Splash';
 import Settings from './pages/Settings/Settings';
 import User from './pages/User/User';
 import PickerPacker from './pages/PickerPacker/PickerPacker';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 import { useEffect } from 'react';
 
 
@@ -23,12 +24,12 @@ function App() {
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
-      if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/') {
+      if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/' || location.pathname === '/resetpassword') {
         navigate('/home')
         window.location.href = '/home'
       }
     }else{
-      if(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/') {
+      if(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword') {
         navigate('/')
         window.location.href = '/'
       }
@@ -44,7 +45,7 @@ function App() {
 
   return (
     <>
-      {(location.pathname === '/login' || location.pathname === '/' || location.pathname === '/register') || <Header />}
+      {(location.pathname === '/login' || location.pathname === '/' || location.pathname === '/register' || location.pathname === '/resetpassword') || <Header />}
       <div className="App-header flex justify-center items-center font-mono">
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.pathname}>
@@ -59,6 +60,7 @@ function App() {
               } />
             <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
             <Route path='/kpis/picking_and_packing' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <PickerPacker /> : <Navigate replace to={"/"} />} />
+            <Route path='/resetpassword' element={<ResetPassword />} />
           </Routes>
         </AnimatePresence>
       </div>

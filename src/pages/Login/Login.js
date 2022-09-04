@@ -107,7 +107,7 @@ export default function Login() {
                             >
                               Log in
                             </motion.button>
-                            <a className="text-gray-500" href="#!">Forgot password?</a>
+                            <a className="text-gray-500" href="/resetpassword">Forgot password?</a>
                           </div>
                           <div className="flex items-center justify-between pb-6">
                             <p className="mb-0 mr-2">Don't have an account?</p>
