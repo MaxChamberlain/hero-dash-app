@@ -4,9 +4,13 @@ import { useState, useEffect } from 'react';
 import General from './components/General';
 import Users from './components/Users';
 import CompanySettings from './components/CompanySettings';
+import { TransitionGroup } from "react-transition-group";
 
 export default function Settings(){
-    const [page, setPage] = useState('general')
+    // get url params
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    const [page, setPage] = useState(tab || 'general')
     const [users, setUsers] = useState([])
 
     let canManage = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage;
@@ -41,9 +45,11 @@ export default function Settings(){
                     {isAdmin && <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'Company Settings' ? 'bg-slate-200' : ''}`} onClick={() => setPage('Company Settings')}>Company Settings</div>}
                 </div>
                 <div className='bg-slate-50 w-full md:ml-5 rounded p-2 flex flex-col md:text-xs'>
-                    {page === 'general' && <General />}
-                    {page === 'users' && (canManage) && <Users users={users} />}
-                    {page === 'Company Settings' && isAdmin && <CompanySettings />}
+                    <TransitionGroup component='div'>
+                        {page === 'general' && <General />}
+                        {page === 'users' && (canManage) && <Users users={users} />}
+                        {page === 'Company Settings' && isAdmin && <CompanySettings />}
+                    </TransitionGroup>
                 </div>
             </div>
         </motion.div>
