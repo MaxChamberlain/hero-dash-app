@@ -1,4 +1,5 @@
 import { useState } from 'react';
+const { sentResetEmail } = require('./utils/sentResetEmail');
 const logo = require('../../assets/images/logo.png');
 
 export default function ResetPassword(){
@@ -29,10 +30,11 @@ export default function ResetPassword(){
             <form className="flex flex-col justify-center items-center">
                 <div className="flex flex-col justify-center items-center">
                     <label className='text-left w-full' htmlFor="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder='Email' />
+                    <input type="email" name="email" id="email" placeholder='Email' onChange={e => setEmail(e.target.value)} />
                     <div className='w-full bg-stone-300 p-5 mt-5 cursor-pointer rounded text-center'
                         onClick={() => {
                             setSent(true);
+                            sentResetEmail(email);
                         }}
                     >Reset Password</div>
                 </div>
