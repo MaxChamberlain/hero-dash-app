@@ -58,7 +58,7 @@ function App() {
                 <Navigate replace to={'/'} />
               } />
             <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
-            <Route path='/pickerpacker' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <PickerPacker /> : <Navigate replace to={"/"} />} />
+            <Route path='/kpis/picking_and_packing' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <PickerPacker /> : <Navigate replace to={"/"} />} />
           </Routes>
         </AnimatePresence>
       </div>

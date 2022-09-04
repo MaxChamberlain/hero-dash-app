@@ -44,12 +44,44 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
         const newData = names.map(name => {
             const filteredData = pickData.filter(item => `${item.user_first_name} ${item.user_last_name}` === name)
             const filteredPackData = packData.filter(item => `${item.user_first_name} ${item.user_last_name}` === name)
+
+            const dates = [...new Set(filteredData.map(e => new Date(e.created_at).toLocaleDateString('en-US')))]
+            const packDates = [...new Set(filteredPackData.map(e => new Date(e.created_at).toLocaleDateString('en-US')))]
+
+            const mostRecentDate = new Date(Math.max(...dates.map(e => new Date(e))))
+            const mostRecentPackDate = new Date(Math.max(...packDates.map(e => new Date(e))))
+
+            const picksOnDate = filteredData.filter(item => new Date(item.created_at).toLocaleDateString('en-US') === mostRecentDate.toLocaleDateString('en-US'))
+            const packsOnDate = filteredPackData.filter(item => new Date(item.created_at).toLocaleDateString('en-US') === mostRecentPackDate.toLocaleDateString('en-US'))
+
+            picksOnDate.sort((a, b) => {
+                return new Date(a.created_at) - new Date(b.created_at)
+            })
+            packsOnDate.sort((a, b) => {
+                return new Date(a.created_at) - new Date(b.created_at)
+            })
+
+            const times = picksOnDate.map(e => {
+                return new Date(e.created_at)
+            })
+            const packTimes = packsOnDate.map(e => {
+                return new Date(e.created_at)
+            })
+
+            const s = Math.floor((times[times.length - 1] - times[0]) / 1000)
+            const packSeconds = Math.floor((packTimes[packTimes.length - 1] - packTimes[0]) / 1000)
+
+            const average = (s / filteredData.length).toFixed(0)
+            const packAverage = (packSeconds / filteredPackData.length).toFixed(0)
+
             return {
                 name: name.split(' ')[0] + ' ' + name.split(' ')[1].charAt(0),
                 items_picked: filteredData.length || 0,
                 orders_picked: [...new Set(filteredData.map(e => e.order_number))].length || 0,
                 items_packed: filteredPackData.reduce((acc, curr) => acc + curr.total_items, 0) || 0,
                 orders_packed: filteredPackData.length || 0,
+                avg_pick_time: average || 0,
+                avg_pack_time: packAverage || 0,
             }
         })
 

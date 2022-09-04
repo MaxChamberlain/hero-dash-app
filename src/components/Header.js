@@ -2,10 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import OptionsDropdown from "./OptionsDropdown";
+import { useLocation } from "react-router-dom";
 const logo = require("../assets/images/logo.png");
+
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const location = useLocation();
 
   return (
     <>
@@ -33,7 +36,10 @@ export default function Header() {
             animate={{ rotate: navbarOpen ? 45 : 0, y: navbarOpen ? -10 : 0 }}
           />
         </svg>
-
+        <div className='text-2xl text-white flex items-center h-full'>
+          {location.pathname.split('/')[1] === 'user' ? 'User' : 
+          location.pathname.split('/')[location.pathname.split('/').length - 1].split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+        </div>
         {navbarOpen && <OptionsDropdown />}
 
       </motion.div>
