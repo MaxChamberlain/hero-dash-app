@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import General from './components/General';
 import Users from './components/Users';
 import CompanySettings from './components/CompanySettings';
-import { TransitionGroup } from "react-transition-group";
 
 export default function Settings(){
     // get url params
@@ -45,11 +44,9 @@ export default function Settings(){
                     {isAdmin && <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'Company Settings' ? 'bg-slate-200' : ''}`} onClick={() => setPage('Company Settings')}>Company Settings</div>}
                 </div>
                 <div className='bg-slate-50 w-full md:ml-5 rounded p-2 flex flex-col md:text-xs'>
-                    <TransitionGroup component='div'>
-                        {page === 'general' && <General />}
-                        {page === 'users' && (canManage) && <Users users={users} />}
-                        {page === 'Company Settings' && isAdmin && <CompanySettings />}
-                    </TransitionGroup>
+                    {page === 'general' && <General />}
+                    {page === 'users' && (canManage) && <Users users={users} />}
+                    {page === 'Company Settings' && isAdmin && <CompanySettings />}
                 </div>
             </div>
         </motion.div>

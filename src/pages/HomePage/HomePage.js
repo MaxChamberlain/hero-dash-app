@@ -23,7 +23,7 @@ export default function HomePage(){
         >
             <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
             <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
-            <Totals dateRange={dateRange} setDateRange={setDateRange} />
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <Totals dateRange={dateRange} setDateRange={setDateRange} />}
             <div className="flex flex-col md:flex-row justify-around align-start w-full">
                 <div className='w-full md:mr-2'>
                     <PicksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
@@ -32,7 +32,7 @@ export default function HomePage(){
                     <PacksPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
                 </div>
             </div>
-            <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} />
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} />}
         </motion.div>
     )
 }

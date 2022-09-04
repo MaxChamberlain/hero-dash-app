@@ -9,6 +9,7 @@ import Register from './pages/Register/Register';
 import Splash from './pages/Splash/Splash';
 import Settings from './pages/Settings/Settings';
 import User from './pages/User/User';
+import PickerPacker from './pages/PickerPacker/PickerPacker';
 import { useEffect } from 'react';
 
 
@@ -51,8 +52,13 @@ function App() {
             <Route path='/home' element={<HomePage /> } />
             <Route path='/login' element={<Login /> } /> 
             <Route path='/register' element={<Register /> } /> 
-            <Route path='/settings' element={((JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage) || (JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin)) ? <Settings /> : <Navigate replace to={'/'} />} />
+            <Route path='/settings' element={
+              ((JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage) || (JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin)) ? 
+                <Settings /> : 
+                <Navigate replace to={'/'} />
+              } />
             <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
+            <Route path='/pickerpacker' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <PickerPacker /> : <Navigate replace to={"/"} />} />
           </Routes>
         </AnimatePresence>
       </div>
