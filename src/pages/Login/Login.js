@@ -8,6 +8,7 @@ const arrow = require('../../assets/images/arrow.png');
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -58,13 +59,32 @@ export default function Login() {
                           </div>
                           <div className="mb-4">
                             <input
-                              type="password"
+                              type={showPassword ? 'text' : 'password'}
                               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                               id="password-input"
                               placeholder="Password"
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                             />
+                          </div>
+                          <div className="mb-4">
+                            <div className="flex justify-between items-center">
+                              <div className="flex items-center">
+                                <input
+                                  type="checkbox"
+                                  className="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
+                                  id="remember-me"
+                                  checked={showPassword}
+                                  onChange={() => setShowPassword(!showPassword)}
+                                />
+                                <label
+                                  htmlFor="remember-me"
+                                  className="ml-2 block text-sm leading-5 text-gray-900"
+                                >
+                                  Show Password
+                                </label>
+                              </div>
+                            </div>
                           </div>
                           <div className="text-center pt-1 mb-12 pb-1">
                             <motion.button
