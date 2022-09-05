@@ -50,6 +50,10 @@ export async function getData(company_code, dateRange, setLoading, setError){
         setLoading(false)
         return newData
     }catch(e){
+        if(e.response.status === 403 && window.location.href !== '/settings'){
+            localStorage.removeItem('@ViDash:_userInfo')
+            window.location.reload()
+        }
         setError(e.response.data.message)
         console.error(e)
     }

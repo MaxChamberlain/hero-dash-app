@@ -10,6 +10,7 @@ import Splash from './pages/Splash/Splash';
 import Settings from './pages/Settings/Settings';
 import User from './pages/User/User';
 import PickerPacker from './pages/PickerPacker/PickerPacker';
+import Packages from './pages/Packages/Packages';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import FuncReset from './pages/ResetPassword/FuncReset';
 import { useEffect } from 'react';
@@ -60,7 +61,8 @@ function App() {
                 <Navigate replace to={'/'} />
               } />
             <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
-            <Route path='/kpis/picking_and_packing' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <PickerPacker /> : <Navigate replace to={"/"} />} />
+            <Route path='/kpis/picking_and_packing' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <PickerPacker /> : <Navigate replace to={"/"} />} />
+            <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
             <Route path='/resetpassword' element={<ResetPassword />} />
             <Route path='/reset' element={<FuncReset />} />
           </Routes>

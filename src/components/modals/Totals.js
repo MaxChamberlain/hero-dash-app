@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getData } from "../utils/getTotals"
-import Loading from '../../../components/Loading';
+import { getData } from "../../utils/functions/getTotals"
+import Loading from '../Loading';
 
 export default function Totals({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
