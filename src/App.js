@@ -51,7 +51,7 @@ function App() {
       {(location.pathname === '/login' || location.pathname === '/' || location.pathname === '/register' || location.pathname === '/resetpassword' || location.pathname === '/reset') || <Header />}
       <div className="App-header flex justify-center items-center font-mono">
         <PicksDataContext>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode='wait'>
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<Splash />} />
               <Route path='/home' element={<HomePage /> } />

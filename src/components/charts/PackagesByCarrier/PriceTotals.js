@@ -17,8 +17,8 @@ export default function PriceTotals () {
             if(carrier){
                 let tempObj = {
                     carrier: carrier,
-                    total_in_price: temp.reduce((acc, curr) => acc + curr.avg_in_price, 0) / temp.length,
-                    total_out_cost: temp.reduce((acc, curr) => acc + curr.avg_out_cost, 0) / temp.length
+                    total_in_price: temp.reduce((acc, curr) => acc + curr.total_in_price, 0),
+                    total_out_cost: temp.reduce((acc, curr) => acc + curr.total_out_cost, 0)
                 }
                 newData.push(tempObj)
             }
