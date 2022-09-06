@@ -1,7 +1,10 @@
 import CustDatePicker from "../../components/CustDatePicker";
 import PackagesWithPriceModal from "../../components/modals/PackagesWithPriceModal";
 import PackagesByCarrierModal from "../../components/modals/PackagesByCarrierModal";
+import PackagesByShipMethodModal from "../../components/modals/PackagesByShipMethodModal";
 import NavPage from "./components/NavPage";
+
+import { getCompany } from "../../utils/functions/companyHandler/getCompany";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Totals from "../../components/modals/Totals";
@@ -11,6 +14,15 @@ export default function Packages(){
         startDate: new Date(),
         endDate: new Date()
     });
+    const [company, setCompany] = useState({});
+
+    useEffect(() => {
+        const init = async() => {
+            const company = await getCompany();
+            setCompany(company);
+        }
+        init()
+    }, [])
 
     return (
         <motion.div 
@@ -39,7 +51,15 @@ export default function Packages(){
             <div className='bg-slate-300 w-5/6 h-0.5' style={{ borderRadius: '0 50% 50% 0' }}>
             </div>
             {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesByCarrierModal dateRange={dateRange} setDateRange={setDateRange} />}
-        
+
+
+            <div className='mt-12' id='method-section'>
+                By Ship Method
+            </div>
+            <div className='bg-slate-300 w-5/6 h-0.5' style={{ borderRadius: '0 50% 50% 0' }}>
+            </div>
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesByShipMethodModal dateRange={dateRange} setDateRange={setDateRange} />}
+
         </motion.div>
     )
 }

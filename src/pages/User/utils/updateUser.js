@@ -1,10 +1,10 @@
 const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL
 
-export const changeManagerPerms = (_id, value) => {
+export const changeManagerPerms = async (_id, value) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/update',
             {
                 _id,
@@ -29,10 +29,10 @@ export const changeManagerPerms = (_id, value) => {
     }
 }
 
-export const changeAdminPerms = (_id, value) => {
+export const changeAdminPerms = async (_id, value) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/update',
             {
                 _id,
@@ -57,10 +57,10 @@ export const changeAdminPerms = (_id, value) => {
     }
 }
 
-export const changeViewDollarPerms = (_id, value) => {
+export const changeViewDollarPerms = async (_id, value) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/update',
             {
                 _id,
@@ -86,10 +86,10 @@ export const changeViewDollarPerms = (_id, value) => {
     }
 }
 
-export const changeExportPerms = (_id, value) => {
+export const changeExportPerms = async (_id, value) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/update',
             {
                 _id,
@@ -115,10 +115,10 @@ export const changeExportPerms = (_id, value) => {
     }
 }
 
-export const changeDrillDownPerms = (_id, value) => {
+export const changeDrillDownPerms = async (_id, value) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/update',
             {
                 _id,
@@ -145,10 +145,10 @@ export const changeDrillDownPerms = (_id, value) => {
 }
 
 
-export const deleteUser = (_id) => {
+export const deleteUser = async (_id) => {
     try{
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const { data } = axios.post(
+        const { data } = await axios.post(
             URL + '/users/delete',
             {
                 _id

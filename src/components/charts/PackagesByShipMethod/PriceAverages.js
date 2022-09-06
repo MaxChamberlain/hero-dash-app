@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_carrier_data"
+import { getData } from "../../../utils/functions/temp_get_db_method_data"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CustomizedLegend } from '../../../assets/graphs/Legend';
 import { CustomTooltip } from '../../../assets/graphs/Tooltip';
@@ -9,23 +9,23 @@ export default function PriceAverages ({ dateRange, setDateRange }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [carrierData, setCarrierData] = useState([]);
+    const [methodData, setMethodData] = useState([]);
 
     useEffect(() => {
-        const carriers = [...new Set(data.map(carrier => carrier.carrier))]
+        const methods = [...new Set(data.map(method => method.method))]
         let newData = []
-        carriers.forEach(carrier => {
-            let temp = data.filter(carrierData => carrierData.carrier === carrier)
-            if(carrier){
+        methods.forEach(method => {
+            let temp = data.filter(methodData => methodData.method === method)
+            if(method){
                 let tempObj = {
-                    carrier: carrier,
-                    total_in_price: temp.reduce((acc, curr) => acc + curr.total_in_price, 0),
-                    total_out_cost: temp.reduce((acc, curr) => acc + curr.total_out_cost, 0)
+                    method: method,
+                    avg_in_price: temp.reduce((acc, curr) => acc + curr.avg_in_price, 0) / temp.length,
+                    avg_out_cost: temp.reduce((acc, curr) => acc + curr.avg_out_cost, 0) / temp.length
                 }
                 newData.push(tempObj)
             }
         })
-        setCarrierData(newData)
+        setMethodData(newData)
     }, [data])
 
     useEffect(() => { 
@@ -60,13 +60,13 @@ export default function PriceAverages ({ dateRange, setDateRange }) {
         return(
             <>
                 <ResponsiveContainer width='100%' height='100%'>
-                    <BarChart data={carrierData} layout='vertical'>
+                    <BarChart data={methodData} layout='vertical'>
                         <Tooltip content={CustomTooltip} />
                         <Legend content={CustomizedLegend} />
-                        <YAxis orientation='right' type='category' dataKey="carrier" style={{ fontSize: 15, }} />
-                        <XAxis reversed type='number' />
-                        <Bar dataKey='total_in_price' fill="#ffbb00" />
-                        <Bar dataKey='total_out_cost' fill="#ff8000" />
+                        <YAxis orientation='left' type='category' dataKey="method" style={{ fontSize: 15, }} />
+                        <XAxis type='number' />
+                        <Bar dataKey='avg_in_price' fill="#ffbb00" />
+                        <Bar dataKey='avg_out_cost' fill="#ff8000" />
                     </BarChart>
                 </ResponsiveContainer>
             </>

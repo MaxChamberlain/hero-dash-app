@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Switch } from "@mui/material"
 const { changeRefreshToken } = require('../utils/changeRefreshToken');
-const { getCompany, changeUseDHL } = require('../utils/getCompany');
+const { getCompany, changeUseDHL } = require('../../../utils/functions/companyHandler/getCompany');
 
 export default function CompanySettings(){
     const [ refresh_token, setRefreshToken ] = useState('');

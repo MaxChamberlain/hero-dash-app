@@ -25,7 +25,6 @@ export default function PriceAverages ({ dateRange, setDateRange }) {
                 newData.push(tempObj)
             }
         })
-        console.log(newData)
         setCarrierData(newData)
     }, [data])
 
