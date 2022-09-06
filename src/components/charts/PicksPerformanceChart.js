@@ -48,8 +48,8 @@ export default function PickerPerformanceChart({ dateRange, setDateRange }) {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip content={CustomTooltip} />
-                    <Bar dataKey="items_picked" fill="#2b59f2" />
-                    <Bar dataKey="orders_picked" fill="#7f2bf2" />
+                    <Bar dataKey="items_picked" fill="#ffbb00" />
+                    <Bar dataKey="orders_picked" fill="#ff8000" />
                 </BarChart>
             </ResponsiveContainer>
         )
