@@ -1,5 +1,7 @@
 import CustDatePicker from "../../components/CustDatePicker";
 import PackagesWithPriceModal from "../../components/modals/PackagesWithPriceModal";
+import PackagesByCarrierModal from "../../components/modals/PackagesByCarrierModal";
+import NavPage from "./components/NavPage";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Totals from "../../components/modals/Totals";
@@ -18,9 +20,26 @@ export default function Packages(){
             exit={{ x: -80, opacity: 0 }}
             transition={{ duration: 0.2, delay: 0 }}
         >
-            <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+            <div className='flex justify-between align-start w-full'>
+                <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+                <NavPage />
+            </div>
+            <div className='mt-12' id='general-section'>
+                General
+            </div>
+            <div className='bg-slate-300 w-5/6 h-0.5 -mb-8' style={{ borderRadius: '0 50% 50% 0' }}>
+            </div>
             {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <Totals dateRange={dateRange} setDateRange={setDateRange} />}
             {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesWithPriceModal dateRange={dateRange} setDateRange={setDateRange} />}
+
+
+            <div className='mt-12' id='carrier-section'>
+                By Carrier
+            </div>
+            <div className='bg-slate-300 w-5/6 h-0.5' style={{ borderRadius: '0 50% 50% 0' }}>
+            </div>
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesByCarrierModal dateRange={dateRange} setDateRange={setDateRange} />}
+        
         </motion.div>
     )
 }
