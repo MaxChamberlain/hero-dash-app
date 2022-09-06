@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import TimezoneSelect from "react-timezone-select"
 const { changePackageReport, changePickingPackingReport } = require("../utils/changeReports")
 const { changeTimeZone } = require("../utils/changeTimeZone")
+const { sendTestPickPack, sendTestPackage } = require("../utils/sendTestReport")
 
 export default function General(){
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('@ViDash:_userInfo')))
@@ -67,20 +68,27 @@ export default function General(){
                 </div>
                 <div className='flex flex-col md:flex-row justify-between w-1/2 mb-5'>
                     <p className='text-base'>Picking and Packing KPIs</p>
-                    <Switch
-                        checked={userInfo.picking_packing_report}
-                        onChange={(e) => changePickingPackingReport(userInfo._id, e.target.checked, setUserInfo)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        size='large'
-                    />
+                    <div className='flex'>
+                        <Switch
+                            checked={userInfo.picking_packing_report}
+                            onChange={(e) => changePickingPackingReport(userInfo._id, e.target.checked, setUserInfo)}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                            size='large'
+                        />
+                        <div className='border-2 border-slate-600 py-2 px-4 rounded cursor-pointer' onClick={() => sendTestPickPack()}>Test</div>
+                    </div>
                 </div>
                 <div className='flex flex-col md:flex-row justify-between w-1/2 mb-5'>
-                    <p className='text-base'>Package KPIs</p><Switch
-                        checked={userInfo.package_report}
-                        onChange={(e) => changePackageReport(userInfo._id, e.target.checked, setUserInfo)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        size='large'
-                    />
+                    <p className='text-base'>Package KPIs</p>
+                    <div className='flex'>
+                        <Switch
+                            checked={userInfo.package_report}
+                            onChange={(e) => changePackageReport(userInfo._id, e.target.checked, setUserInfo)}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                            size='large'
+                        />
+                        <div className='border-2 border-slate-600 py-2 px-4 rounded cursor-pointer' onClick={() => sendTestPackage()}>Test</div>
+                    </div>
                 </div>
 
                 <div className='md:text-2xl text-lg mt-5'>
