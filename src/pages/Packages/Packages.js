@@ -5,16 +5,16 @@ import PackagesByShipMethodModal from "../../components/modals/PackagesByShipMet
 import NavPage from "./components/NavPage";
 
 import { getCompany } from "../../utils/functions/companyHandler/getCompany";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import Totals from "../../components/modals/Totals";
 
+const { PickDatacontext } = require('../../contexts/DataContext');
+
 export default function Packages(){
-    const [dateRange, setDateRange] = useState({
-        startDate: new Date(),
-        endDate: new Date()
-    });
     const [company, setCompany] = useState({});
+
+    const {dateRange, setDateRange} = useContext(PickDatacontext)
 
     useEffect(() => {
         const init = async() => {

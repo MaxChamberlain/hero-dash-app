@@ -6,14 +6,13 @@ import CustDatePicker from "../../components/CustDatePicker";
 import BestPicker from "./components/BestPicker";
 import BestPacker from "./components/BestPacker";
 import Speedometer from "./components/Speedometer";
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { motion } from "framer-motion";
+const { PickDatacontext } = require('../../contexts/DataContext');
 
 export default function HomePage(){
-    const [dateRange, setDateRange] = useState({
-        startDate: new Date(),
-        endDate: new Date()
-    });
+    
+    const {dateRange, setDateRange} = useContext(PickDatacontext)
 
     return (
         <motion.div 

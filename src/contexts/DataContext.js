@@ -75,6 +75,9 @@ export default function PicksDataContext({ children }){
             })
         }
         refreshData()
+        if(dateRange.startDate > dateRange.endDate){
+            dateRange.endDate = dateRange.startDate
+        }
     }, [dateRange])
 
     useEffect(() => {
