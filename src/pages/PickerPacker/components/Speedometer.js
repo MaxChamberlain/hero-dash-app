@@ -1,42 +1,19 @@
 import Speedometer, { Arc, Progress, Indicator } from 'react-speedometer';
-import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_person_data"
+import { useContext } from 'react';
 import Loading from '../../../components/Loading';
+const { PickDatacontext } = require('../../../contexts/DataContext');
 
 export default function CustSpeedometer({ dateRange, setDateRange }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [dateRange])
+    const PickDataContext = useContext(PickDatacontext)
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [])
-
-    useEffect(() => {
-        if(error){
-            setLoading(false)
-        }
-    }, [error])
-
-    console.log(data.reduce((a, b) => a + b.items_picked, 0))
-
-    if(loading){
+    if(PickDataContext.loading){
         return <Loading />
-    }else if(error){
+    }else if(PickDataContext.error){
         return(
-            <div>Error</div>
+            <div className='text-red'>
+                Error
+            </div>
         )
     }else{
     return(
@@ -56,8 +33,8 @@ export default function CustSpeedometer({ dateRange, setDateRange }) {
             }}>
                 <div style={{ marginBottom: 10, fontSize: 25, textAlign: 'center' }}><span style={{color: '#ffbb00'}}>Picked</span> VS <span style={{color: '#ff8000'}}>Packed</span></div>
                 <Speedometer 
-                    value={data.reduce((a, b) => a + b.items_picked, 0)} 
-                    max={data.reduce((a, b) => a + b.items_packed, 0) + data.reduce((a, b) => a + b.items_picked, 0)}
+                    value={PickDataContext.pickerPersonData.reduce((a, b) => a + b.items_picked, 0)} 
+                    max={PickDataContext.pickerPersonData.reduce((a, b) => a + b.items_packed, 0) + PickDataContext.pickerPersonData.reduce((a, b) => a + b.items_picked, 0)}
                     accentColor='#ffbb00'
                     angle='280'
                 >
@@ -74,7 +51,7 @@ export default function CustSpeedometer({ dateRange, setDateRange }) {
                             textAnchor="middle"
                             alignmentBaseline="middle"
                         >
-                            {data.reduce((a, b) => a + b.items_picked, 0)} items picked
+                            {PickDataContext.pickerPersonData.reduce((a, b) => a + b.items_picked, 0)} items picked
                         </text>
                         <text
                             {...textProps} // textProps has the "transform" property only
@@ -85,7 +62,7 @@ export default function CustSpeedometer({ dateRange, setDateRange }) {
                             textAnchor="middle"
                             alignmentBaseline="middle"
                         >
-                            {data.reduce((a, b) => a + b.items_packed, 0)} items packed
+                            {PickDataContext.pickerPersonData.reduce((a, b) => a + b.items_packed, 0)} items packed
                         </text>
                         </>
                         }}

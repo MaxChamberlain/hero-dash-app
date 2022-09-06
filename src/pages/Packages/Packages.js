@@ -60,6 +60,10 @@ export default function Packages(){
             </div>
             {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canSeeDollarAmounts) && <PackagesByShipMethodModal dateRange={dateRange} setDateRange={setDateRange} />}
 
+            {company.uses_dhl && <>
+                
+            </>}
+
         </motion.div>
     )
 }

@@ -24,9 +24,7 @@ export async function getData(dateRange, setLoading, setError){
             }
         )
 
-        const uniqueDates = getUniqueDates(data)
-        let newData = getCarrierData(data, uniqueDates, dateRange)
-        newData = parseInputDates(newData, dateRange)
+        let newData = getCarrierData(data)
         newData.sort((a, b) => {
             if(a.date > b.date){
                 return 1
@@ -48,62 +46,8 @@ export async function getData(dateRange, setLoading, setError){
     }
 }
 
-function getUniqueDates(data){
-    return [...new Set(data.filter(e => new Date(new Date() - new Date(e.created_date)).getMonth() % 11 === 0).map(item => new Date(item.created_date).toLocaleDateString('en-US')))]
-}
-
-function parseData(data, uniqueDates, dateRange){
-    return uniqueDates.map(date => {
-        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date && item.shipping_labels[0].cost > 0)
-
-        return {
-            date: date,
-            name: `${new Date(date).toString().substring(0,3)}, ${new Date(date).toString().slice(4, 7)} ${new Date(date).getDate()}`,
-            orders_sent: filteredData.reduce((a, b) => a + b.shipping_labels.length, 0),
-            total_out_cost: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
-            avg_out_cost: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / filteredData.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-            total_in_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,
-            avg_in_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100 / filteredData.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-            orders_with_free_shipping: filteredData.reduce((a, b) => {
-              if(b.order.shipping_lines.price === 0 || b.order.shipping_lines.price === undefined || b.order.shipping_lines.price === null) {
-                return a + 1
-              }  
-              return a
-            }, 0),
-        }
-    })
-}
-
-function parseInputDates(newData, dateRange){
-    let inputDates = []
-    for(let i = new Date(dateRange.startDate); i <= new Date(dateRange.endDate); i.setDate(i.getDate() + 1)){
-            inputDates.push(new Date(i).toLocaleDateString('en-US'))
-    }
-    inputDates.forEach(e => {
-        if(new Date(e) > new Date()){
-            inputDates = inputDates.slice(0, inputDates.indexOf(e) - 1)
-        }
-    })
-
-    inputDates.forEach(e => {
-        if(!newData.find(item => item.date === e)){
-            newData.push({
-                date: e,
-                name: `${new Date(e).toString().substring(0,3)}, ${new Date(e).toString().slice(4, 7)} ${new Date(e).getDate()}`,
-                orders_sent: 0,
-                total_out_cost: 0,
-                avg_out_cost: 0,
-                total_in_price: 0,
-                avg_in_price: 0,
-                orders_with_free_shipping: 0
-            })
-        }
-    })
-    return newData
-}
-
 function getCarrierData(data){
-    let carrierData = data.filter(item => item.shipping_labels[0].cost > 0)
+    let carrierData = data.filter(item => item.shipping_labels[0] && item.shipping_labels[0].cost > 0)
     let carriers = [...new Set(carrierData.map(item => item.shipping_labels[0].carrier))]
     let retObj = []
     carriers.forEach(e => {

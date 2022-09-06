@@ -1,51 +1,30 @@
-import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_method_data"
+import { useContext } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CustomizedLegend } from '../../../assets/graphs/Legend';
 import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
+const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function PickerPerformanceChart({ dateRange, setDateRange }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+export default function OrdersSentChart() {
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [dateRange])
+    const PickDataContext = useContext(PickDatacontext)
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [])
-
-    useEffect(() => {
-        if(error){
-            setLoading(false)
-        }
-    }, [error])
-
-    if(loading){
+    if(PickDataContext.loading){
         return <Loading />
-    }else if(error){
+    }else if(PickDataContext.error){
         return(
-            <div>Error</div>
+            <div className='text-red'>
+                Error
+            </div>
         )
     }else{
         return(
             <>
                 <ResponsiveContainer width='100%' height='100%'>
-                    <BarChart data={data.filter(e => e.method)}>
+                    <BarChart data={PickDataContext.methodData.filter(e => e.method)}>
                         <Tooltip content={CustomTooltip} />
                         <Legend content={CustomizedLegend} />
-                        <XAxis dataKey="method" />
+                        <XAxis dataKey="carrier" />
                         <YAxis />
                         <Bar dataKey='orders_sent' fill="#2b59f2" />
                     </BarChart>

@@ -1,21 +1,16 @@
-import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_carrier_data"
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { CustomizedLegend } from '../../../assets/graphs/Legend';
-import { CustomTooltip } from '../../../assets/graphs/Tooltip';
+import { useContext, useState, useEffect } from 'react';
 import Loading from '../../Loading';
+const { PickDatacontext } = require('../../../contexts/DataContext');
 
 export default function PriceAverages ({ dateRange, setDateRange, setShowTable }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
     const [carrierData, setCarrierData] = useState([]);
+    const PickDataContext = useContext(PickDatacontext)
 
     useEffect(() => {
-        const carriers = [...new Set(data.map(carrier => carrier.carrier))]
+        const carriers = [...new Set(PickDataContext.carrierData.map(carrier => carrier.carrier))]
         let newData = []
         carriers.forEach(carrier => {
-            let temp = data.filter(carrierData => carrierData.carrier === carrier)
+            let temp = PickDataContext.carrierData.filter(carrierData => carrierData.carrier === carrier)
             if(carrier){
                 let tempObj = {
                     carrier: carrier,
@@ -29,37 +24,17 @@ export default function PriceAverages ({ dateRange, setDateRange, setShowTable }
             }
         })
         setCarrierData(newData)
-    }, [data])
-
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [dateRange])
-
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [])
-
-    useEffect(() => {
-        if(error){
-            setLoading(false)
-        }
-    }, [error])
-
-    if(loading){
-        return <Loading />
-    }else if(error){
-        return(
-            <div>Error</div>
-        )
-    }else{
+    }, [PickDataContext.carrierData])
+    
+        if(PickDataContext.loading){
+            return <Loading />
+        }else if(PickDataContext.error){
+            return(
+                <div className='text-red'>
+                    Error
+                </div>
+            )
+        }else{
         return(
             <div className='w-screen h-screen fixed top-0 left-0 z-[9998] flex justify-center items-center text-white' style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
                 <div className='p-4 w-11/12 bg-slate-800 rounded'>

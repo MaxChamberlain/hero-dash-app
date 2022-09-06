@@ -1,60 +1,39 @@
-import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_carrier_data"
+import { useContext, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CustomizedLegend } from '../../../assets/graphs/Legend';
 import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
+const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function PriceAverages ({ dateRange, setDateRange }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+export default function PriceTotals () {
     const [carrierData, setCarrierData] = useState([]);
+    const PickDataContext = useContext(PickDatacontext)
 
     useEffect(() => {
-        const carriers = [...new Set(data.map(carrier => carrier.carrier))]
+        const carriers = [...new Set(PickDataContext.carrierData.map(carrier => carrier.carrier))]
         let newData = []
         carriers.forEach(carrier => {
-            let temp = data.filter(carrierData => carrierData.carrier === carrier)
+            let temp = PickDataContext.carrierData.filter(carrierData => carrierData.carrier === carrier)
             if(carrier){
                 let tempObj = {
                     carrier: carrier,
-                    total_in_price: temp.reduce((acc, curr) => acc + curr.total_in_price, 0),
-                    total_out_cost: temp.reduce((acc, curr) => acc + curr.total_out_cost, 0)
+                    total_in_price: temp.reduce((acc, curr) => acc + curr.avg_in_price, 0) / temp.length,
+                    total_out_cost: temp.reduce((acc, curr) => acc + curr.avg_out_cost, 0) / temp.length
                 }
                 newData.push(tempObj)
             }
         })
         setCarrierData(newData)
-    }, [data])
+    }, [PickDataContext.carrierData])
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [dateRange])
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [])
-
-    useEffect(() => {
-        if(error){
-            setLoading(false)
-        }
-    }, [error])
-
-    if(loading){
+    if(PickDataContext.loading){
         return <Loading />
-    }else if(error){
+    }else if(PickDataContext.error){
         return(
-            <div>Error</div>
+            <div className='text-red'>
+                Error
+            </div>
         )
     }else{
         return(

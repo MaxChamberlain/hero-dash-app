@@ -24,8 +24,7 @@ export async function getData(dateRange, setLoading, setError){
             }
         )
 
-        const uniqueDates = getUniqueDates(data)
-        let newData = getShipMethod(data, uniqueDates, dateRange)
+        let newData = getShipMethod(data)
         newData.sort((a, b) => {
             if(a.date > b.date){
                 return 1
@@ -47,37 +46,8 @@ export async function getData(dateRange, setLoading, setError){
     }
 }
 
-function getUniqueDates(data){
-    return [...new Set(data.filter(e => new Date(new Date() - new Date(e.created_date)).getMonth() % 11 === 0).map(item => new Date(item.created_date).toLocaleDateString('en-US')))]
-}
-function parseInputDates(newData, dateRange){
-    let inputDates = []
-    for(let i = new Date(dateRange.startDate); i <= new Date(dateRange.endDate); i.setDate(i.getDate() + 1)){
-            inputDates.push(new Date(i).toLocaleDateString('en-US'))
-    }
-    inputDates.forEach(e => {
-        if(new Date(e) > new Date()){
-            inputDates = inputDates.slice(0, inputDates.indexOf(e) - 1)
-        }
-    })
-
-    inputDates.forEach(e => {
-        if(!newData.find(item => item.date === e)){
-            newData.push({
-                method: e === 'First' ? 'First Class' : e.replace('DHL SmartMail ', ''),
-                orders_sent: 0,
-                total_out_cost: 0,
-                avg_out_cost: 0,
-                total_in_price: 0,
-                avg_in_price: 0,
-            })
-        }
-    })
-    return newData
-}
-
 function getShipMethod(data){
-    let shipData = data.filter(item => item.shipping_labels[0].cost > 0)
+    let shipData = data.filter(item => item.shipping_labels[0] && item.shipping_labels[0].cost > 0)
     let shipMethods = [...new Set(shipData.map(item => item.shipping_labels[0].shipping_method))]
     let retObj = []
     shipMethods.forEach(e => {

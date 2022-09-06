@@ -1,51 +1,28 @@
-import { useState, useEffect } from 'react';
-import { getData } from "../../../utils/functions/temp_get_db_person_data"
+import { useContext } from 'react';
 import Loading from '../../../components/Loading';
+const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function BestPacker({ dateRange, setDateRange }) {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+export default function BestPacker() {
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [dateRange])
+    const PickDataContext = useContext(PickDatacontext)
 
-    useEffect(() => { 
-        const refreshData = async () => {
-            const returnedData = await getData(dateRange.startDate, dateRange.endDate, setLoading, setError);
-            setData(returnedData)
-        }
-        refreshData()
-    }, [])
-
-    useEffect(() => {
-        if(error){
-            setLoading(false)
-        }
-    }, [error])
-
-    console.log(data)
-
-    if(loading){
+    if(PickDataContext.loading){
         return <Loading />
-    }else if(error){
+    }else if(PickDataContext.error){
         return(
-            <div>Error</div>
+            <div className='text-red'>
+                Error
+            </div>
         )
     }else{
         return(
-            data.length > 0 && <>
+            PickDataContext.pickerPersonData.length > 0 && <>
                 <div className='mt-12 text-black text-base bg-stone-300 p-1'>Best packer</div>
                 
                 <div className='w-full bg-stone-200 rounded text-sm p-4 mb-4 flex justify-center' style={{ height: 290 }}>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Items: {data.sort((a, b) => b.items_packed - a.items_packed)[0].name}
+                            By Items: {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].name}
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             
@@ -59,7 +36,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Orders packed</div>
-                                    {data.sort((a, b) => b.items_packed - a.items_packed)[0].orders_packed} items
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].orders_packed} items
                                 </div>
                             </div>
                             
@@ -73,7 +50,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Items packed</div>
-                                    {data.sort((a, b) => b.items_packed - a.items_packed)[0].items_packed} orders
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].items_packed} orders
                                 </div>
                             </div>
                             
@@ -87,7 +64,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Avg pack Time</div>
-                                    {data.sort((a, b) => b.items_packed - a.items_packed)[0].avg_pack_time} sec/pack
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].avg_pack_time} sec/pack
                                 </div>
                             </div>
                             
@@ -95,7 +72,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                     </div>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Orders: {data.sort((a, b) => b.orders_packed - a.orders_packed)[0].name}
+                            By Orders: {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].name}
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             
@@ -109,7 +86,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Orders packed</div>
-                                    {data.sort((a, b) => b.orders_packed - a.orders_packed)[0].orders_packed} items
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].orders_packed} items
                                 </div>
                             </div>
                             
@@ -123,7 +100,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Items packed</div>
-                                    {data.sort((a, b) => b.orders_packed - a.orders_packed)[0].items_packed} orders
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].items_packed} orders
                                 </div>
                             </div>
                             
@@ -137,7 +114,7 @@ export default function BestPacker({ dateRange, setDateRange }) {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Avg pack Time</div>
-                                    {data.sort((a, b) => b.orders_packed - a.orders_packed)[0].avg_pack_time} sec/pack
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].avg_pack_time} sec/pack
                                 </div>
                             </div>
                             
