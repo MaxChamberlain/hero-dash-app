@@ -4,7 +4,7 @@ import KPIPages from "./KPIPages";
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-export default function OptionsDropdown(){
+export default function OptionsDropdown( { setNavbarOpen }){
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return(
@@ -25,9 +25,9 @@ export default function OptionsDropdown(){
                         }
                     </svg>
                 </div>
-                {dropdownOpen && <KPIPages />}
+                {dropdownOpen && <KPIPages setNavbarOpen={setNavbarOpen} />}
             </div>
-            {JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage && <AccountSettings />}
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) && <AccountSettings setNavbarOpen={setNavbarOpen} />}
             <Logout />
         </motion.div>
     )

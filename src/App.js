@@ -61,7 +61,7 @@ function App() {
                 <Navigate replace to={'/'} />
               } />
             <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
-            <Route path='/kpis/picking_and_packing' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <PickerPacker /> : <Navigate replace to={"/"} />} />
+            <Route path='/kpis/picking_and_packing' element={<PickerPacker />} />
             <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
             <Route path='/resetpassword' element={<ResetPassword />} />
             <Route path='/reset' element={<FuncReset />} />

@@ -2,12 +2,13 @@ const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL
 
 export async function getData(dateRange, setLoading, setError){
+    const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
+    const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
+    const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
+    const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
     try{
         setLoading(true)
-        const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-        const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
-        const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
-        const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
+
         const { data } = await axios.post(
             URL + '/packagedata/getall',
             {
@@ -22,7 +23,6 @@ export async function getData(dateRange, setLoading, setError){
                 }
             }
         )
-
 
         const uniqueDates = getUniqueDates(data)
         let newData = parseData(data, uniqueDates)
@@ -50,7 +50,8 @@ function getUniqueDates(data){
 
 function parseData(data, uniqueDates){
     return uniqueDates.map(date => {
-        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date && item.shipping_labels[0].cost > 0)
+        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date && (item.shipping_labels[0] && item.shipping_labels[0].cost > 0))
+
 
         return {
             date: date,

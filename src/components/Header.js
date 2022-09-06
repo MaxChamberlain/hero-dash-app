@@ -40,7 +40,7 @@ export default function Header() {
           {location.pathname.split('/')[1] === 'user' ? 'User' : 
           location.pathname.split('/')[location.pathname.split('/').length - 1].split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
         </div>
-        {navbarOpen && <OptionsDropdown />}
+        {navbarOpen && <OptionsDropdown setNavbarOpen={setNavbarOpen} />}
 
       </motion.div>
       <div className='h-13'></div>
