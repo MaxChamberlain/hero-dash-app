@@ -70,7 +70,7 @@ async function parseZoneData(data, origin_zips, destination_zips){
         return packagesPerZone.map(e => {return {...e, zone: `Zone ${e.zone}`}})
 
     }catch(e){
-        if(e.response.status === 403){
+        if(e.response.status === 403){ 
             localStorage.removeItem('@ViDash:_userInfo')
             window.location.reload()
         }
