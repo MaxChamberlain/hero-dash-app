@@ -28,23 +28,30 @@ function App() {
   let canManage = false
 
   useEffect(() => {
-    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
-      if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/' || location.pathname === '/resetpassword' || location.pathname === '/reset') {
-        navigate('/home')
-        window.location.href = '/home'
-      }
-    }else{
-      if(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword' && location.pathname !== '/reset') {
+    if((!JSON.parse(localStorage.getItem('@ViDash:_userInfo')))){
+      if((location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword' && location.pathname !== '/reset')){
         navigate('/')
         window.location.href = '/'
       }
-    }
-    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) {
-      isAdmin = true
-      canManage = true
-    }
-    if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage){
-      canManage = true
+    }else{
+      if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token) {
+        if(location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/' || location.pathname === '/resetpassword' || location.pathname === '/reset') {
+          navigate('/home')
+          window.location.href = '/home'
+        }
+      }else{
+        if(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword' && location.pathname !== '/reset') {
+          navigate('/')
+          window.location.href = '/'
+        }
+      }
+      if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) {
+        isAdmin = true
+        canManage = true
+      }
+      if(JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage){
+        canManage = true
+      }
     }
   }, [location.pathname])
 
