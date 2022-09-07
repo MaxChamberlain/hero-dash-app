@@ -13,7 +13,9 @@ import PickerPacker from './pages/PickerPacker/PickerPacker';
 import Packages from './pages/Packages/Packages';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import FuncReset from './pages/ResetPassword/FuncReset';
+import DHLShipping from './pages/DHLShipping/DHLShipping';
 import PicksDataContext from './contexts/DataContext';
+import CompanyContext from './contexts/CompanyContext';
 import { useEffect } from 'react';
 
 
@@ -51,24 +53,27 @@ function App() {
       {(location.pathname === '/login' || location.pathname === '/' || location.pathname === '/register' || location.pathname === '/resetpassword' || location.pathname === '/reset') || <Header />}
       <div className="App-header flex justify-center items-center font-mono">
         <PicksDataContext>
-          <AnimatePresence mode='wait'>
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Splash />} />
-              <Route path='/home' element={<HomePage /> } />
-              <Route path='/login' element={<Login /> } /> 
-              <Route path='/register' element={<Register /> } /> 
-              <Route path='/settings' element={
-                ((JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage) || (JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin)) ? 
-                  <Settings /> : 
-                  <Navigate replace to={'/'} />
-                } />
-              <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
-              <Route path='/kpis/picking_and_packing' element={<PickerPacker />} />
-              <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
-              <Route path='/resetpassword' element={<ResetPassword />} />
-              <Route path='/reset' element={<FuncReset />} />
-            </Routes>
-          </AnimatePresence>
+          <CompanyContext>
+            <AnimatePresence mode='wait'>
+              <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<Splash />} />
+                <Route path='/home' element={<HomePage /> } />
+                <Route path='/login' element={<Login /> } /> 
+                <Route path='/register' element={<Register /> } /> 
+                <Route path='/settings' element={
+                  ((JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage) || (JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin)) ? 
+                    <Settings /> : 
+                    <Navigate replace to={'/'} />
+                  } />
+                <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
+                <Route path='/kpis/picking_and_packing' element={<PickerPacker />} />
+                <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
+                <Route path='/kpis/dhl_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <DHLShipping /> : <Navigate replace to={"/"} />} />
+                <Route path='/resetpassword' element={<ResetPassword />} />
+                <Route path='/reset' element={<FuncReset />} />
+              </Routes>
+            </AnimatePresence>
+          </CompanyContext>
         </PicksDataContext>
       </div>
     </>

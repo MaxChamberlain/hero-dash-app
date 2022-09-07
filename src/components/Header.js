@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import OptionsDropdown from "./OptionsDropdown";
 import { useLocation } from "react-router-dom";
+import CompanyContext from "../contexts/CompanyContext";
 const logo = require("../assets/images/logo.png");
 
 
@@ -40,7 +41,9 @@ export default function Header() {
           {location.pathname.split('/')[1] === 'user' ? 'User' : 
           location.pathname.split('/')[location.pathname.split('/').length - 1].split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
         </div>
-        {navbarOpen && <OptionsDropdown setNavbarOpen={setNavbarOpen} />}
+        <CompanyContext>
+          {navbarOpen && <OptionsDropdown setNavbarOpen={setNavbarOpen} />}
+        </CompanyContext>
 
       </motion.div>
       <div className='h-13'></div>

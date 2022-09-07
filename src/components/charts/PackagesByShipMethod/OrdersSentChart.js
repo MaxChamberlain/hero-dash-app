@@ -24,7 +24,7 @@ export default function OrdersSentChart() {
                     <BarChart data={PickDataContext.methodData.filter(e => e.method)}>
                         <Tooltip content={CustomTooltip} />
                         <Legend content={CustomizedLegend} />
-                        <XAxis dataKey="carrier" />
+                        <XAxis dataKey="method" />
                         <YAxis />
                         <Bar dataKey='orders_sent' fill="#2b59f2" />
                     </BarChart>
