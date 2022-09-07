@@ -5,6 +5,7 @@ import { getData as getPackageDataConsolidated } from "../utils/functions/temp_g
 import { getData as getTotals } from "../utils/functions/getTotals"
 import { getData as getCarrierData} from "../utils/functions/temp_get_db_carrier_data"
 import { getData as getMethodData } from "../utils/functions/temp_get_db_method_data"
+const {getDHLZone} = require("../utils/functions/getDhlZone");
 
 export const PickDatacontext = createContext()
 
@@ -20,6 +21,7 @@ export default function PicksDataContext({ children }){
     const [totalsData, setTotalsData] = useState([]);
     const [carrierData, setCarrierData] = useState([]);
     const [methodData, setMethodData] = useState([]);
+    const [dhlZoneData, setDhlZoneData] = useState([]);
 
     useEffect(() => {
         const refreshData = async () => {
@@ -47,6 +49,10 @@ export default function PicksDataContext({ children }){
             getMethodData(dateRange, setLoading, setError).then(data => {
                 setMethodData(data)
             })
+
+            getDHLZone(dateRange, setLoading, setError).then(data => {
+                setDhlZoneData(data)
+            })
         }
         refreshData()
     }, [])
@@ -73,6 +79,10 @@ export default function PicksDataContext({ children }){
             getCarrierData(dateRange, setLoading, setError).then(data => {
                 setCarrierData(data)
             })
+
+            getDHLZone(dateRange, setLoading, setError).then(data => {
+                setDhlZoneData(data)
+            })
         }
         refreshData()
         if(dateRange.startDate > dateRange.endDate){
@@ -96,6 +106,7 @@ export default function PicksDataContext({ children }){
                 totalsData, setTotalsData,
                 carrierData, setCarrierData,
                 methodData, setMethodData,
+                dhlZoneData, setDhlZoneData,
                 packagesDataConsolidated, setPackagesDataConsolidated,
                 dateRange, setDateRange, 
                 loading, setLoading, 
