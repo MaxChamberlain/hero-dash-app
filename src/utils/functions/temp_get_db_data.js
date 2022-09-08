@@ -50,7 +50,7 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
                 items_picked: filteredData.length || 0,
                 orders_picked: [...new Set(filteredData.map(e => e.order_number))].length || 0,
                 items_packed: filteredPackData.reduce((acc, curr) => acc + curr.total_items, 0) || 0,
-                orders_packed: filteredPackData.length || 0,
+                packages_packed: filteredPackData.length || 0,
             }
         })
 

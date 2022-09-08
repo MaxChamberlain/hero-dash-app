@@ -5,9 +5,10 @@ import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function OrdersSentChart() {
+export default function packagesSentChart() {
 
     const PickDataContext = useContext(PickDatacontext)
+    console.log(PickDataContext)
 
     if(PickDataContext.loading){
         return <Loading />
@@ -21,10 +22,10 @@ export default function OrdersSentChart() {
         return(
             <>
                 <ResponsiveContainer width='100%' height='100%'>
-                    <BarChart data={PickDataContext.methodData.filter(e => e.method)}>
+                    <BarChart data={PickDataContext.dhlZoneData}>
                         <Tooltip content={CustomTooltip} />
                         <Legend content={CustomizedLegend} />
-                        <XAxis dataKey="method" />
+                        <XAxis dataKey="zone" />
                         <YAxis />
                         <Bar dataKey='packages_sent' fill="#2b59f2" />
                     </BarChart>

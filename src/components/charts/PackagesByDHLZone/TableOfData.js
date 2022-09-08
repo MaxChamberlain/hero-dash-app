@@ -14,7 +14,7 @@ export default function PriceAverages ({ dateRange, setDateRange, setShowTable }
             if(zone){
                 let tempObj = {
                     zone: zone,
-                    total_packages: temp.reduce((acc, curr) => acc + curr.orders_sent, 0),
+                    total_packages: temp.reduce((acc, curr) => acc + curr.packages_sent, 0),
                     total_in_price: temp.reduce((acc, curr) => acc + curr.total_in_price, 0),
                     total_out_cost: temp.reduce((acc, curr) => acc + curr.total_out_cost, 0),
                     avg_in_price: temp.reduce((acc, curr) => acc + curr.avg_in_price, 0) / temp.length,

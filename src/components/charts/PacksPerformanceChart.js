@@ -27,7 +27,7 @@ export default function PickerPerformanceChart() {
                     <YAxis />
                     <Tooltip content={CustomTooltip} />
                     <Bar dataKey="items_packed" fill="#ffbb00" />
-                    <Bar dataKey="orders_packed" fill="#ff8000" />
+                    <Bar dataKey="packages_packed" fill="#ff8000" />
                 </BarChart>
             </ResponsiveContainer>
         )

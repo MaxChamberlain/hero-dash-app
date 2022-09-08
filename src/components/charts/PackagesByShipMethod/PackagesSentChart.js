@@ -5,7 +5,7 @@ import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function OrdersSentChart() {
+export default function packagesSentChart() {
 
     const PickDataContext = useContext(PickDatacontext)
 

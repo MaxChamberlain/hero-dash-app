@@ -39,8 +39,8 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Orders packed</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].orders_packed} items
+                                    <div>Packages Packed</div>
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].packages_packed} items
                                 </div>
                             </div>
                             
@@ -53,7 +53,7 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Items packed</div>
+                                    <div>Items Packed</div>
                                     {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].items_packed} orders
                                 </div>
                             </div>
@@ -67,7 +67,7 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Avg pack Time</div>
+                                    <div>Avg Pack Time</div>
                                     {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].avg_pack_time} sec/pack
                                 </div>
                             </div>
@@ -77,8 +77,8 @@ export default function BestPacker() {
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
                             By Orders: {canDrillDown ? 
-                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].name :
-                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].displayName
+                            PickDataContext.pickerPersonData.sort((a, b) => b.packages_packed - a.packages_packed)[0].name :
+                            PickDataContext.pickerPersonData.sort((a, b) => b.packages_packed - a.packages_packed)[0].displayName
                         }
                         </div>
                         <div className='w-full text-black text-base p-1'>
@@ -92,8 +92,8 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Orders packed</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].orders_packed} items
+                                    <div>Packages Packed</div>
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.packages_packed - a.packages_packed)[0].packages_packed} items
                                 </div>
                             </div>
                             
@@ -106,8 +106,8 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Items packed</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].items_packed} orders
+                                    <div>Items Packed</div>
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.packages_packed - a.packages_packed)[0].items_packed} orders
                                 </div>
                             </div>
                             
@@ -120,8 +120,8 @@ export default function BestPacker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Avg pack Time</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].avg_pack_time} sec/pack
+                                    <div>Avg Pack Time</div>
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.packages_packed - a.packages_packed)[0].avg_pack_time} sec/pack
                                 </div>
                             </div>
                             

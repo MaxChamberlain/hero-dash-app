@@ -23,9 +23,9 @@ export default function Totals() {
             </div>
 
                 <div className=''>
-                    <div className='md:text-lg text-base'>Orders Sent</div>
+                    <div className='md:text-lg text-base'>Packages Sent</div>
                     <div>{
-                        Math.round((PickDataContext.totalsData.reduce((a, b) => {return a + b.orders_sent}, 0)) * 100) / 100    
+                        Math.round((PickDataContext.totalsData.reduce((a, b) => {return a + b.packages_sent}, 0)) * 100) / 100    
                     }</div>
                 </div>
                 

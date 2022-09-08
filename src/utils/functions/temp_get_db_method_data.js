@@ -54,7 +54,7 @@ function getShipMethod(data){
         let filteredDate = shipData.filter(item => item.shipping_labels[0].shipping_method === e)
             retObj.push({
                 method: e === 'First' ? 'First Class' : e.replace('DHL SmartMail ', ''),
-                orders_sent: filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0),
+                packages_sent: filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0),
                 total_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
                 avg_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
                 total_in_price: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,

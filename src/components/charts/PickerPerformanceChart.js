@@ -28,7 +28,7 @@ export default function PickerPerformanceChart() {
                     <Bar dataKey="items_picked" fill="#2b59f2" />
                     <Bar dataKey="orders_picked" fill="#7f2bf2" />
                     <Bar dataKey="items_packed" fill="#ffbb00" />
-                    <Bar dataKey="orders_packed" fill="#ff8000" />
+                    <Bar dataKey="packages_packed" fill="#ff8000" />
                 </BarChart>
             </ResponsiveContainer>
         )

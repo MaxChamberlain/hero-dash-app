@@ -26,7 +26,7 @@ export default function OrdersSentChart() {
                         <Legend content={CustomizedLegend} />
                         <XAxis dataKey="carrier" />
                         <YAxis />
-                        <Bar dataKey='orders_sent' fill="#2b59f2" />
+                        <Bar dataKey='packages_sent' fill="#2b59f2" />
                     </BarChart>
                 </ResponsiveContainer>
             </>
