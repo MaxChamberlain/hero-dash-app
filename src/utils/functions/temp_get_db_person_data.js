@@ -82,6 +82,7 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
                 orders_packed: filteredPackData.length || 0,
                 avg_pick_time: average || 0,
                 avg_pack_time: packAverage || 0,
+                displayName: name === `${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).first_name} ${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).last_name}` ? name + ' (You)' : ''
             }
         })
 

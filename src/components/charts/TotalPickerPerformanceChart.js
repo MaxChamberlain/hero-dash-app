@@ -8,6 +8,7 @@ const { PickDatacontext } = require('../../contexts/DataContext');
 export default function TotalPickerPerformanceChart() {
 
     const PickDataContext = useContext(PickDatacontext)
+    const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
 
     if(PickDataContext.loading){
         return <Loading />
@@ -22,7 +23,7 @@ export default function TotalPickerPerformanceChart() {
             <ResponsiveContainer width='100%' height='100%'>
                 <BarChart data={PickDataContext.pickerPersonData}>
                     <Legend content={CustomizedLegend} />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey={canDrillDown ? "name" : "displayName"} />
                     <YAxis />
                     <Tooltip content={CustomTooltip} />
                     <Bar dataKey="items_picked" fill="#2b59f2" />
