@@ -20,7 +20,7 @@ export default function TotalPickerPerformanceChart() {
     }else{
         return(
             <ResponsiveContainer width='100%' height='100%'>
-                <BarChart data={PickDataContext.pickData}>
+                <BarChart data={PickDataContext.pickerPersonData}>
                     <Legend content={CustomizedLegend} />
                     <XAxis dataKey="name" />
                     <YAxis />

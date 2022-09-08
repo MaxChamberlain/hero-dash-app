@@ -20,13 +20,13 @@ export default function PickerPerformanceChart() {
     }else{
         return(
             <ResponsiveContainer width='100%' height='100%'>
-                <BarChart data={PickDataContext.pickData.filter(e => e.items_picked > 0)}>
+                <BarChart data={PickDataContext.pickerPersonData.filter(e => e.items_picked > 0)}>
                     <Legend content={CustomizedLegend} />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip content={CustomTooltip} />
-                    <Bar dataKey="items_picked" fill="#ffbb00" />
-                    <Bar dataKey="orders_picked" fill="#ff8000" />
+                    <Bar dataKey="items_picked" fill="rgb(43, 89, 242)" />
+                    <Bar dataKey="orders_picked" fill="rgb(127, 43, 242)" />
                 </BarChart>
             </ResponsiveContainer>
         )
