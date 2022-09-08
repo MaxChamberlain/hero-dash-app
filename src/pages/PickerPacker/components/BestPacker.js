@@ -5,6 +5,7 @@ const { PickDatacontext } = require('../../../contexts/DataContext');
 export default function BestPacker() {
 
     const PickDataContext = useContext(PickDatacontext)
+    const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
 
     if(PickDataContext.loading){
         return <Loading />
@@ -17,12 +18,15 @@ export default function BestPacker() {
     }else{
         return(
             PickDataContext.pickerPersonData.length > 0 && <>
-                <div className='mt-12 text-black text-base bg-stone-300 p-1'>Best packer</div>
+                <div className='mt-12 text-black text-base bg-stone-300 p-1'>Best Packer</div>
                 
                 <div className='w-full bg-stone-200 rounded text-sm p-4 mb-4 flex justify-center' style={{ height: 290 }}>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Items: {PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].name}
+                            By Items: {canDrillDown ?
+                            PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].name :
+                            PickDataContext.pickerPersonData.sort((a, b) => b.items_packed - a.items_packed)[0].displayName
+                            }
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             
@@ -72,7 +76,10 @@ export default function BestPacker() {
                     </div>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Orders: {PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].name}
+                            By Orders: {canDrillDown ? 
+                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].name :
+                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_packed - a.orders_packed)[0].displayName
+                        }
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             

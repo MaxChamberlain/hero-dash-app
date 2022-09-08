@@ -38,6 +38,9 @@ const FAKE_NAMES = [
     'Yummy Yak',
     'Witty Whale',
     'Ugly Unicorn',
+    'Tasty Turtle',
+    'Silly Seal',
+    'Rude Rhino',
 ]
 
 export const getData = async (startDate, endDate, setLoading, setError) => {

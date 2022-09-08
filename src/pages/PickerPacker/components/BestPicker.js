@@ -5,6 +5,7 @@ const { PickDatacontext } = require('../../../contexts/DataContext');
 export default function BestPicker() {
 
     const PickDataContext = useContext(PickDatacontext)
+    const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
 
     if(PickDataContext.loading){
         return <Loading />
@@ -22,7 +23,10 @@ export default function BestPicker() {
                 <div className='w-full bg-stone-200 rounded text-lg p-4 mb-4 flex justify-center' style={{ height: 290 }}>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Items: {PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].name}
+                            By Items: {canDrillDown ?
+                            PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].name :
+                            PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].displayName
+                        }
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             
@@ -71,8 +75,11 @@ export default function BestPicker() {
                         </div>
                     </div>
                     <div className='w-full border-stone-300 border-2 p-2'>
-                        <div className='w-full text-black text-lg bg-stone-300 p-1'>
-                            By Orders: {PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].name}
+                        <div className='w-full text-black text-base bg-stone-300 p-1'>
+                            By Orders: {canDrillDown ?
+                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].name :
+                            PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].displayName
+                        }
                         </div>
                         <div className='w-full text-black text-base p-1'>
                             
