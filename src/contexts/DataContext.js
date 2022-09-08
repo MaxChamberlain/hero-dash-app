@@ -20,35 +20,47 @@ export default function PicksDataContext({ children }){
     const [totalsData, setTotalsData] = useState([]);
     const [carrierData, setCarrierData] = useState([]);
     const [methodData, setMethodData] = useState([]);
+    const [dhlZoneData, setDhlZoneData] = useState([]);
 
     useEffect(() => {
-        const refreshData = async () => {
-            getData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                setPickData(data.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
-                setPackData(data.sort((a, b) => (a.items_packed < b.items_packed) ? 1 : -1))
-            })
+        let refreshData
+        if(localStorage.getItem('@ViDash:_userInfo')){
+            refreshData = async () => {
+                getData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
+                    setPickData(data.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
+                    setPackData(data.sort((a, b) => (a.items_packed < b.items_packed) ? 1 : -1))
+                })
 
-            getPersonData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                setPickerPersonData(data)
-            })
+                getPersonData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
+                    setPickerPersonData(data)
+                })
 
-            getPackageDataConsolidated(dateRange, setLoading, setError).then(data => {
-                setPackagesDataConsolidated(data)
-            })
+                getPackageDataConsolidated(dateRange, setLoading, setError).then(data => {
+                    setPackagesDataConsolidated(data)
+                })
 
-            getTotals(dateRange, setLoading, setError).then(data => {
-                setTotalsData(data)
-            })
+                getTotals(dateRange, setLoading, setError).then(data => {
+                    setTotalsData(data)
+                })
 
-            getCarrierData(dateRange, setLoading, setError).then(data => {
-                setCarrierData(data)
-            })
+                getCarrierData(dateRange, setLoading, setError).then(data => {
+                    setCarrierData(data)
+                })
 
-            getMethodData(dateRange, setLoading, setError).then(data => {
-                setMethodData(data)
-            })
+                getMethodData(dateRange, setLoading, setError).then(data => {
+                    setMethodData(data)
+                })
+
+                if(localStorage.getItem('@ViDash:_userInfo')){
+                    require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
+                        setDhlZoneData(data)
+                    })  
+                }
+            }
         }
-        refreshData()
+        if(localStorage.getItem('@ViDash:_userInfo')){
+            refreshData()
+        }
     }, [])
 
     useEffect(() => {
@@ -73,8 +85,16 @@ export default function PicksDataContext({ children }){
             getCarrierData(dateRange, setLoading, setError).then(data => {
                 setCarrierData(data)
             })
+
+            if(localStorage.getItem('@ViDash:_userInfo')){
+                require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
+                    setDhlZoneData(data)
+                })  
+            }
         }
-        refreshData()
+        if(localStorage.getItem('@ViDash:_userInfo')){
+            refreshData()
+        }
         if(dateRange.startDate > dateRange.endDate){
             dateRange.endDate = dateRange.startDate
         }
@@ -96,6 +116,7 @@ export default function PicksDataContext({ children }){
                 totalsData, setTotalsData,
                 carrierData, setCarrierData,
                 methodData, setMethodData,
+                dhlZoneData, setDhlZoneData,
                 packagesDataConsolidated, setPackagesDataConsolidated,
                 dateRange, setDateRange, 
                 loading, setLoading, 

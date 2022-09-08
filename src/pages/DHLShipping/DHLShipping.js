@@ -2,10 +2,13 @@ import { useContext } from "react";
 import { CompanyContext } from "../../contexts/CompanyContext";
 import { PickDatacontext } from "../../contexts/DataContext";
 import Loading from "../../components/Loading";
+import CustDatePicker from "../../components/CustDatePicker";
+import { motion } from "framer-motion";
+import PackagesByDHLZoneModal from "../../components/modals/PackagesByDHLZoneModal";
 
 export default function DHLShipping() {
     const { company } = useContext(CompanyContext);
-    const { packagesData } = useContext(PickDatacontext);
+    const packagesData = useContext(PickDatacontext);
 
     if (packagesData.loading || !company) {
         return <Loading />;
@@ -14,11 +17,16 @@ export default function DHLShipping() {
     } else {
         if (company.uses_dhl) {
             return (
-            <>
-                <div className="w-full h-full flex flex-col items-center justify-center">
-                <h1 className="text-2xl text-white">DHL Shipping</h1>
-                </div>
-            </>
+                <motion.div 
+                    className='text-slate-50 w-screen p-5 h-screen py-20 text-black'
+                    initial={{ x: -80, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -80, opacity: 0 }}
+                    transition={{ duration: 0.2, delay: 0 }}
+                >
+                    <CustDatePicker dateRange={packagesData.dateRange} setDateRange={packagesData.setDateRange} />
+                    <PackagesByDHLZoneModal dateRange={packagesData.dateRange} setDateRange={packagesData.setDateRange} />
+                </motion.div>
             );
         } else {
             return (
