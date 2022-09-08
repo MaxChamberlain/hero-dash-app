@@ -1,6 +1,45 @@
 const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL
 
+const FAKE_NAMES = [
+    'Great Grizzly',
+    'Sleek Snake',
+    'Coarse Cougar',
+    'Rusty Raccoon',
+    'Meek Moose',
+    'Tawdry Tiger',
+    'Sordid Squirrel',
+    'Fierce Fox',
+    'Lively Lion',
+    'Vivacious Vulture',
+    'Sassy Skunk',
+    'Zesty Zebra',
+    'Elegant Elephant',
+    'Puffy Penguin',
+    'Kind Koala',
+    'Hilarious Hyena',
+    'Dapper Deer',
+    'Gentle Giraffe',
+    'Fancy Flamingo',
+    'Eager Eagle',
+    'Wise Wolf',
+    'Quaint Quail',
+    'Obedient Ostrich',
+    'Majestic Monkey',
+    'Jolly Jaguar',
+    'Huge Hippo',
+    'Glamorous Goat',
+    'Fragile Frog',
+    'Dazzling Dolphin',
+    'Clever Cat',
+    'Breezy Bear',
+    'Aggressive Alligator',
+    'Zany Zebra',
+    'Yummy Yak',
+    'Witty Whale',
+    'Ugly Unicorn',
+]
+
 export const getData = async (startDate, endDate, setLoading, setError) => {
     setLoading(true)
     const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
@@ -82,7 +121,7 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
                 orders_packed: filteredPackData.length || 0,
                 avg_pick_time: average || 0,
                 avg_pack_time: packAverage || 0,
-                displayName: name === `${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).first_name} ${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).last_name}` ? name + ' (You)' : ''
+                displayName: name.toLowerCase() === `${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).first_name.toLowerCase()} ${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).last_name.toLowerCase()}` ? name + ' (You)' : FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)]
             }
         })
 
