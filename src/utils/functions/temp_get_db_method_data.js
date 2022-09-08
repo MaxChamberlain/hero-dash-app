@@ -47,7 +47,7 @@ export async function getData(dateRange, setLoading, setError){
 }
 
 function getShipMethod(data){
-    let shipData = data.filter(item => item.shipping_labels[0] && item.shipping_labels[0].cost > 0)
+    let shipData = data.filter(item => item.shipping_labels[0])
     let shipMethods = [...new Set(shipData.map(item => item.shipping_labels[0].shipping_method))]
     let retObj = []
     shipMethods.forEach(e => {

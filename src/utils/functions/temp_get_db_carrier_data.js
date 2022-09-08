@@ -47,7 +47,7 @@ export async function getData(dateRange, setLoading, setError){
 }
 
 function getCarrierData(data){
-    let carrierData = data.filter(item => item.shipping_labels[0] && item.shipping_labels[0].cost > 0)
+    let carrierData = data.filter(item => item.shipping_labels[0])
     let carriers = [...new Set(carrierData.map(item => item.shipping_labels[0].carrier))]
     let retObj = []
     carriers.forEach(e => {

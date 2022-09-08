@@ -65,7 +65,7 @@ function getUniqueDates(data){
 
 function parseData(data, uniqueDates, dateRange){
     return uniqueDates.map(date => {
-        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date && item.shipping_labels[0].cost > 0)
+        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date)
 
         return {
             date: date,
@@ -111,63 +111,4 @@ function parseInputDates(newData, dateRange){
         }
     })
     return newData
-}
-
-function getZoneData(data, zoneData){
-    let zoneDataObj = data.filter(item => item.shipping_labels[0].cost > 0)
-    zoneDataObj.forEach(e => {
-        try{
-            e.zone = zoneData.find(item => item.dest_zip === e.address.zip.slice(0,3)).zone_number
-        }catch(err){
-            console.log(e)
-        }
-    })
-    let zones = [...new Set(zoneData.map(item => item.zone_number))]
-    let retObj = []
-    zones.forEach(e => {
-        if(zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + b.shipping_labels.length, 0) > 0){
-            retObj.push({
-                zone: e,
-                orders_sent: zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + b.shipping_labels.length, 0),
-                total_out_cost: Math.round(zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
-                avg_out_cost: Math.round(zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-                total_in_price: Math.round(zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,
-                avg_in_price: Math.round(zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100 / zoneDataObj.filter(item => item.zone === e).reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-            })
-        }
-    })
-}
-
-function getCarrierData(data){
-    let carrierData = data.filter(item => item.shipping_labels[0].cost > 0)
-    let carriers = [...new Set(carrierData.map(item => item.shipping_labels[0].carrier))]
-    let retObj = []
-    carriers.forEach(e => {
-        let filteredDate = carrierData.filter(item => item.shipping_labels[0].carrier === e)
-            retObj.push({
-                carrier: e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' ').slice(0,3) === 'Dhl' ? 'DHL' : e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' '),
-                orders_sent: filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0),
-                total_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
-                avg_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-                total_in_price: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,
-                avg_in_price: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100 / filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-            })
-    })
-}
-
-function getShipMethod(data){
-    let shipData = data.filter(item => item.shipping_labels[0].cost > 0)
-    let shipMethods = [...new Set(shipData.map(item => item.shipping_labels[0].shipping_method))]
-    let retObj = []
-    shipMethods.forEach(e => {
-        let filteredDate = shipData.filter(item => item.shipping_labels[0].shipping_method === e)
-            retObj.push({
-                method: e === 'First' ? 'First Class' : e.replace('DHL SmartMail ', ''),
-                orders_sent: filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0),
-                total_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
-                avg_out_cost: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-                total_in_price: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,
-                avg_in_price: Math.round(filteredDate.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100 / filteredDate.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
-            })
-    })
 }

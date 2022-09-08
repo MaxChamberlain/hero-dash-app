@@ -50,7 +50,7 @@ function getUniqueDates(data){
 
 function parseData(data, uniqueDates){
     return uniqueDates.map(date => {
-        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date && (item.shipping_labels[0] && item.shipping_labels[0].cost > 0))
+        const filteredData = data.filter(item => new Date(item.created_date).toLocaleDateString('en-US') === date)
 
 
         return {
