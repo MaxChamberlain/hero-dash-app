@@ -27,6 +27,13 @@ function App() {
   let isAdmin = false
   let canManage = false
 
+  if((!JSON.parse(localStorage.getItem('@ViDash:_userInfo')))){
+    if((location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword' && location.pathname !== '/reset')){
+      navigate('/')
+      window.location.href = '/'
+    }
+  }
+
   useEffect(() => {
     if((!JSON.parse(localStorage.getItem('@ViDash:_userInfo')))){
       if((location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' && location.pathname !== '/resetpassword' && location.pathname !== '/reset')){
