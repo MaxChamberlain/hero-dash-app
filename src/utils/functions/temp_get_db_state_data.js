@@ -1,12 +1,12 @@
 const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL
 const allStates = require('../../pages/USAMap/data/allstates.json')
-const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
 
 export async function getData(dateRange, setLoading, setError){
     const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
     const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
+    const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
+    const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
     try{
         setLoading(true)
         const { data } = await axios.post(
@@ -64,6 +64,7 @@ function parseData(data, uniqueStates){
 }
 
 async function getDHLZones (packageData, origin_zip, destination_zip){
+    const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
 
     try{
         
