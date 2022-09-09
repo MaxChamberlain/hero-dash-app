@@ -33,6 +33,9 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
             color2 = zoneColors[zone[1].zone.split(' ')[1]]
             title = zone[0].zone + ' & ' + zone[1].zone
         }
+        if(selectedState){
+            title += ' (' + selectedState.properties.name + ')'
+        }
     }
 
     return(

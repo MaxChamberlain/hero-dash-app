@@ -66,7 +66,7 @@ export const Map = ({ data, selectedState, setSelectedState }) => {
                     </svg>
                     <Geography
                       key={geo.rsmKey}
-                      stroke={selectedState.id === geo.id ? 'rgb(43, 89, 242)' : "#ccc"}
+                      stroke={selectedState.id === geo.id ? 'white' : "#ccc"}
                       geography={geo}
                       strokeWidth={selectedState.id === geo.id ? 2 : 0.5}
                       onClick={() => setSelectedState(geo)}
