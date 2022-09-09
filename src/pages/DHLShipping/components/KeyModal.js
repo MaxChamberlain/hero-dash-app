@@ -31,8 +31,8 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
 
     if(data.find(x => x.id === selectedState.id)){
         stateOrders = data.find(x => x.id === selectedState.id).packages_sent
-        stateEarnedShip = data.find(x => x.id === selectedState.id).total_out_cost
-        stateSpentShip = data.find(x => x.id === selectedState.id).total_in_price
+        stateEarnedShip = data.find(x => x.id === selectedState.id).total_in_price
+        stateSpentShip = data.find(x => x.id === selectedState.id).total_out_cost
     }
 
     if(zone && zone.length > 0) {
