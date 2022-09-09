@@ -25,6 +25,15 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
     let color1 = '#ccc'
     let color2 = '#ccc'
     let title = 'No Zone Selected'
+    let stateOrders = 0
+    let stateEarnedShip = 0
+    let stateSpentShip = 0
+
+    if(data.find(x => x.id === selectedState.id)){
+        stateOrders = data.find(x => x.id === selectedState.id).packages_sent
+        stateEarnedShip = data.find(x => x.id === selectedState.id).total_out_cost
+        stateSpentShip = data.find(x => x.id === selectedState.id).total_in_price
+    }
 
     if(zone && zone.length > 0) {
         color1 = zoneColors[zone[0].zone.split(' ')[1]]
@@ -61,13 +70,13 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
                     }
                     <h1 className="text-2xl">{title}</h1>
                 </div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Packages Sent: <span>{zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Cost of Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Earned From Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Cost of Shipping: <span>${zone.length > 0 ? zone[0].avg_out_cost : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Shipping: <span>${zone.length > 0 ? zone[0].avg_in_price : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Total Earned From Orders: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_order_price, 0) : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Orders: <span>${zone.length > 0 ? zone[0].avg_order_price : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Packages Sent: <span>{zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 0} ({Math.round((stateOrders / (zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 1)) * 100)}%)</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Cost of Shipping: <span className="text-red-600">${zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 0} ({Math.round((stateSpentShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 1)) * 100)}%)</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Earned From Shipping: <span className="text-green-700">${zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 0} ({Math.round((stateEarnedShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 1)) * 100)}%)</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Cost of Shipping: <span className="text-red-600">${zone.length > 0 ? zone[0].avg_out_cost : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Shipping: <span className="text-green-700">${zone.length > 0 ? zone[0].avg_in_price : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Total Earned From Orders: <span className="text-green-700">${zone.length > 0 ? zone.reduce((a, b) => a + b.total_order_price, 0) : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Orders: <span className="text-green-700">${zone.length > 0 ? zone[0].avg_order_price : 0}</span></div>
                 </>
                 }
             </div>
