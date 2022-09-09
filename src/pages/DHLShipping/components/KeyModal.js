@@ -14,35 +14,57 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
         10: '#a5b55c',
     }
 
-    const zone = zoneData.find(e => {
+    const zone = zoneData.filter(e => {
+        console.log(data.find(x => x.id === selectedState.id))
         const zoneZone = e.zone.split(' ')[1]
-        const stateZone = data.find(x => x.id === selectedState.id) ? data.find(x => x.id === selectedState.id).zone_number : 0
-        return zoneZone === stateZone
+        const stateZone = data.find(x => x.id === selectedState.id) ? data.find(x => x.id === selectedState.id).zone_number[0] : 0
+        const stateZone2 = data.find(x => x.id === selectedState.id) ? data.find(x => x.id === selectedState.id).zone_number[data.find(x => x.id === selectedState.id).zone_number.length - 1] : 0
+        return zoneZone === stateZone || zoneZone === stateZone2
     })
-    console.log(zone)
+
+    let color1 = '#ccc'
+    let color2 = '#ccc'
+    let title = 'No Zone Selected'
+
+    if(zone && zone.length > 0) {
+        color1 = zoneColors[zone[0].zone.split(' ')[1]]
+        title = zone[0].zone
+        if(zone.length > 1){
+            color2 = zoneColors[zone[1].zone.split(' ')[1]]
+            title = zone[0].zone + ' & ' + zone[1].zone
+        }
+    }
 
     return(
         <div className="bg-white rounded ml-12 h-fit text-black text-lg w-2/3">
             <div className="flex flex-col w-full bg-stone-200 text-center">
+                {zone && <>
                 <div className="flex justify-center items-center">
                     <div style={{
-                        backgroundColor: zoneColors[zone ? zone.zone.split(' ')[1] : 0],
+                        backgroundColor: color1,
                         width: '20px',
                         height: '20px',
                         marginRight: 20,
                         borderRadius: '50%'
                     }}></div>
-                    <h1 className="text-2xl">{zone ? zone.zone : 'Select a Zone'}</h1>
+                    {zone && zone.length > 1 &&
+                        <div style={{
+                            backgroundColor: color2,
+                            width: '20px',
+                            height: '20px',
+                            marginRight: 20,
+                            borderRadius: '50%'
+                        }}></div>
+                    }
+                    <h1 className="text-2xl">{title}</h1>
                 </div>
-                {zone &&
-                <>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Packages Sent: <span>{zone ? zone.packages_sent : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Cost of Shipping: <span>${zone ? zone.total_out_cost : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Earned From Shipping: <span>${zone ? zone.total_in_price : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Cost of Shipping: <span>${zone ? zone.avg_out_cost : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Shipping: <span>${zone ? zone.avg_in_price : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Total Earned From Orders: <span>${zone ? zone.total_order_price : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Orders: <span>${zone ? zone.avg_order_price : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Packages Sent: <span>{zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Cost of Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Earned From Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Cost of Shipping: <span>${zone.length > 0 ? zone[0].avg_out_cost : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Shipping: <span>${zone.length > 0 ? zone[0].avg_in_price : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Total Earned From Orders: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_order_price, 0) : 0}</span></div>
+                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Orders: <span>${zone.length > 0 ? zone[0].avg_order_price : 0}</span></div>
                 </>
                 }
             </div>

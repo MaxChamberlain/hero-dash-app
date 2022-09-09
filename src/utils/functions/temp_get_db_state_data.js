@@ -58,7 +58,7 @@ function parseData(data, uniqueStates){
             total_order_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.total_price), 0) * 100) / 100,
             avg_order_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.total_price), 0) * 100 / filteredData.length) / 100,
             id: allStates.find(e => e.id === state) ? allStates.find(e => e.id === state).val : state,
-            zone_number: filteredData[0].zone_number
+            zone_number: [...new Set(filteredData.map(e => e.zone_number))]
         }
     })
 }

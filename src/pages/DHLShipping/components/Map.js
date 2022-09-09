@@ -46,22 +46,38 @@ export const Map = ({ data, selectedState, setSelectedState }) => {
         <Geographies geography={geoUrl}>
           {({ geographies }) => (
             <>
-              {geographies.map(geo => {
+              {geographies.map((geo, i) => {
                 const currentState = data.find(e => e.state === allStates.find(e => e.val === geo.id).id)
+                const colorIndexes = currentState ? currentState.zone_number : 0
+
+
+                const leftColor = zoneColors[colorIndexes[0]]
+                const rightColor = (colorIndexes.length > 1 && colorIndexes[1] !== 'N/A') ? zoneColors[colorIndexes[1]] : zoneColors[colorIndexes[0]]
+
                 return(
-                <Geography
-                  key={geo.rsmKey}
-                  stroke={selectedState.id === geo.id ? 'rgb(43, 89, 242)' : "#ccc"}
-                  geography={geo}
-                  strokeWidth={selectedState.id === geo.id ? 2 : 0.5}
-                  onClick={() => setSelectedState(geo)}
-                  style={{
-                    default: { outline: 'none', opacity: currentState ? 1 : 0 },
-                    hover: { outline: 'none', opacity: currentState ? 1 : 0 },
-                    pressed: { outline: 'none', opacity: currentState ? 1 : 0 },
-                  }}
-                  fill={zoneColors[currentState ? currentState.zone_number : 0]}
-                />
+                  <>
+                    <svg>
+                        <defs>
+                            <linearGradient id={`grad${i}`}>
+                                <stop offset="0" stop-color={leftColor}/>
+                                <stop offset="1" stop-color={rightColor}/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <Geography
+                      key={geo.rsmKey}
+                      stroke={selectedState.id === geo.id ? 'rgb(43, 89, 242)' : "#ccc"}
+                      geography={geo}
+                      strokeWidth={selectedState.id === geo.id ? 2 : 0.5}
+                      onClick={() => setSelectedState(geo)}
+                      style={{
+                        default: { outline: 'none', opacity: currentState ? 1 : 0 },
+                        hover: { outline: 'none', opacity: currentState ? 1 : 0 },
+                        pressed: { outline: 'none', opacity: currentState ? 1 : 0 },
+                      }}
+                      fill={`url(#grad${i})`}
+                    />
+                  </>
               )
               })}
               {geographies.map(geo => {
