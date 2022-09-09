@@ -64,6 +64,8 @@ async function parseZoneData(data, origin_zips, destination_zips){
                 total_in_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) * 100) / 100,
                 avg_out_cost: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) / filteredData.length * 100) / 100,
                 avg_in_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) / filteredData.length * 100) / 100,
+                total_order_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.total_price), 0) * 100) / 100,
+                avg_order_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.total_price), 0) / filteredData.length * 100) / 100,
             }
         })
         packagesPerZone.sort((a, b) => a.zone - b.zone)

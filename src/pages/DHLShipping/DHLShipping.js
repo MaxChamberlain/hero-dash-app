@@ -1,12 +1,15 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { CompanyContext } from "../../contexts/CompanyContext";
 import { PickDatacontext } from "../../contexts/DataContext";
 import Loading from "../../components/Loading";
 import CustDatePicker from "../../components/CustDatePicker";
+import { KeyModal } from "./components/KeyModal";
+import { Map } from "./components/Map";
 import { motion } from "framer-motion";
 import PackagesByDHLZoneModal from "../../components/modals/PackagesByDHLZoneModal";
 
 export default function DHLShipping() {
+    const [selectedState, setSelectedState] = useState("");
     const { company } = useContext(CompanyContext);
     const packagesData = useContext(PickDatacontext);
 
@@ -25,6 +28,10 @@ export default function DHLShipping() {
                     transition={{ duration: 0.2, delay: 0 }}
                 >
                     <CustDatePicker dateRange={packagesData.dateRange} setDateRange={packagesData.setDateRange} />
+                    <div className='w-full flex justify-between mt-24'>
+                        <KeyModal data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} zoneData={packagesData.dhlZoneData} />
+                        <Map data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} />
+                    </div>
                     <PackagesByDHLZoneModal dateRange={packagesData.dateRange} setDateRange={packagesData.setDateRange} />
                 </motion.div>
             );

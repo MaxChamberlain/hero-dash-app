@@ -14,6 +14,7 @@ import Packages from './pages/Packages/Packages';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import FuncReset from './pages/ResetPassword/FuncReset';
 import DHLShipping from './pages/DHLShipping/DHLShipping';
+import USAMap from './pages/USAMap/USAMap';
 import PicksDataContext from './contexts/DataContext';
 import CompanyContext from './contexts/CompanyContext';
 import { useEffect } from 'react';
@@ -83,6 +84,7 @@ function App() {
                 <Route path='/kpis/picking_and_packing' element={<PickerPacker />} />
                 <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
                 <Route path='/kpis/dhl_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <DHLShipping /> : <Navigate replace to={"/"} />} />
+                <Route path='/kpis/country_map' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <USAMap /> : <Navigate replace to={"/"} />} />
                 <Route path='/resetpassword' element={<ResetPassword />} />
                 <Route path='/reset' element={<FuncReset />} />
               </Routes>

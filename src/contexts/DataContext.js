@@ -5,6 +5,7 @@ import { getData as getPackageDataConsolidated } from "../utils/functions/temp_g
 import { getData as getTotals } from "../utils/functions/getTotals"
 import { getData as getCarrierData} from "../utils/functions/temp_get_db_carrier_data"
 import { getData as getMethodData } from "../utils/functions/temp_get_db_method_data"
+import { getData as getStateData } from "../utils/functions/temp_get_db_state_data"
 
 export const PickDatacontext = createContext()
 
@@ -21,6 +22,7 @@ export default function PicksDataContext({ children }){
     const [carrierData, setCarrierData] = useState([]);
     const [methodData, setMethodData] = useState([]);
     const [dhlZoneData, setDhlZoneData] = useState([]);
+    const [stateData, setStateData] = useState([]);
 
     useEffect(() => {
         let refreshData
@@ -49,6 +51,10 @@ export default function PicksDataContext({ children }){
 
                 getMethodData(dateRange, setLoading, setError).then(data => {
                     setMethodData(data)
+                })
+
+                getStateData(dateRange, setLoading, setError).then(data => {
+                    setStateData(data)
                 })
 
                 if(localStorage.getItem('@ViDash:_userInfo')){
@@ -86,6 +92,10 @@ export default function PicksDataContext({ children }){
                 setCarrierData(data)
             })
 
+            getStateData(dateRange, setLoading, setError).then(data => {
+                setStateData(data)
+            })
+
             if(localStorage.getItem('@ViDash:_userInfo')){
                 require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
                     setDhlZoneData(data)
@@ -117,6 +127,7 @@ export default function PicksDataContext({ children }){
                 carrierData, setCarrierData,
                 methodData, setMethodData,
                 dhlZoneData, setDhlZoneData,
+                stateData, setStateData,
                 packagesDataConsolidated, setPackagesDataConsolidated,
                 dateRange, setDateRange, 
                 loading, setLoading, 

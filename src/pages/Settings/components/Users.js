@@ -5,11 +5,20 @@ import { sendInvite } from '../utils/sendInvite'
 export default function Users({users}){
     const [inviting, setInviting] = useState(false);
     const [email, setEmail] = useState('');
+    const [filter, setFilter] = useState('');
 
     return (
         <div className='text-slate-900'>
+            <h1>Users</h1>
             <div className='flex justify-between'>
-                <h1>Users</h1>
+                <input
+                    className='w-1/2 p-2 rounded border border-slate-900'
+                    type='text'
+                    placeholder='Search'
+                    value={filter}
+                    onChange={e => setFilter(e.target.value)}
+                    autoFocus
+                />
                 <div className='flex items-center text-sm mg-2 mr-4 py-2 px-4 bg-gray-300 rounded hover:bg-slate-300 cursor-pointer' onClick={() => {
                     setInviting(true)
                 }}>
@@ -17,7 +26,7 @@ export default function Users({users}){
                 </div>
             </div>
             <div className='flex flex-col'>
-                {users && users.length > 0 && users.map(user => (
+                {users && users.length > 0 && users.filter(e => filter ? `${e.first_name}${e.last_name}${e.email_address}`.toLowerCase().includes(filter.toLowerCase()) : e).map(user => (
                     <div className='flex justify-between items-center p-2 border-b border-slate-200 bg-slate-200 my-4 rounded'>
                         <div className='flex items-start md:items-center text-xl md:flex-row flex-col'>
                             <p className='ml-2'>{user.first_name} {user.last_name}</p>
