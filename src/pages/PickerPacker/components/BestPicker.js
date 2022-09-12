@@ -1,8 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Loading from '../../../components/Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
 
 export default function BestPicker() {
+    const [dimensions, setDimensions] = useState({ height: window.innerHeight, width: window.innerWidth });
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setDimensions({ height: window.innerHeight, width: window.innerWidth });
+        })
+    }, [])
 
     const PickDataContext = useContext(PickDatacontext)
     const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
@@ -28,7 +35,7 @@ export default function BestPicker() {
                             PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].displayName
                         }
                         </div>
-                        <div className='w-full text-black text-base p-1'>
+                        <div className={`w-full text-black text-${dimensions.width > 1080 ? 'base' : 'xs'} p-1`}>
                             
                             <div className='flex items-center'>
                                 <div style={{
@@ -76,12 +83,12 @@ export default function BestPicker() {
                     </div>
                     <div className='w-full border-stone-300 border-2 p-2'>
                         <div className='w-full text-black text-base bg-stone-300 p-1'>
-                            By Packages: {canDrillDown ?
+                            By Orders: {canDrillDown ?
                             PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].name :
                             PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].displayName
                         }
                         </div>
-                        <div className='w-full text-black text-base p-1'>
+                        <div className={`w-full text-black text-${dimensions.width > 1080 ? 'base' : 'xs'} p-1`}>
                             
                             <div className='flex items-center'>
                                 <div style={{

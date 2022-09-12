@@ -19,6 +19,9 @@ export default function OrdersSentChart() {
         8: '#26a664',
         9: '#62bd39',
         10: '#a5b55c',
+        11: '#4c6b9c',
+        12: '#f2b400',
+        13: '#f2b400',
     }
 
     const PickDataContext = useContext(PickDatacontext)
