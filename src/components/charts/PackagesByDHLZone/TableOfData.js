@@ -1,9 +1,12 @@
 import { useContext, useState, useEffect } from 'react';
 import Loading from '../../Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
+const downloadIcon = require ('../../../assets/images/download_icon.png');
+const { downloadData } = require('../../../utils/functions/csv/DHL');
 
-export default function PriceAverages ({ dateRange, setDateRange, setShowTable, data, method }) {
+export default function PriceAverages ({ setShowTable, data, method }) {
     const [zoneData, setZoneData] = useState([]);
+    const [downloadable, setDownloadable] = useState(null);
     const PickDataContext = useContext(PickDatacontext)
 
     useEffect(() => {
@@ -38,8 +41,12 @@ export default function PriceAverages ({ dateRange, setDateRange, setShowTable, 
         return(
             <div className='w-screen h-screen fixed top-0 left-0 z-[9998] flex justify-center items-center text-white' style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
                 <div className='p-4 w-11/12 bg-slate-800 rounded'>
-                    <div className='flex justify-center items-center relative'>
-                        <div className='text-2xl font-bold mb-8'>Zone Data ({method})</div>
+                    <div className='flex justify-center items-center relative mb-8'>
+                        <div className='text-2xl font-bold'>Zone Data ({method})</div>
+                        {downloadable ? 
+                            downloadable :
+                            <img src={downloadIcon} alt='download' className='cursor-pointer invert w-6 ml-5 opacity-80' onClick={() => downloadData(PickDataContext.dateRange, setDownloadable)} />
+                        }
                         <div className='absolute right-4 top-0 cursor-pointer text-2xl' onClick={() => setShowTable(false)}>x</div>
                     </div>
                     {zoneData.length > 0 && <table className='table-auto w-full text-lg'>
