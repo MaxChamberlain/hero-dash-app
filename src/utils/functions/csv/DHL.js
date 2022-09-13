@@ -1,14 +1,14 @@
 import { CSVDownload } from "react-csv";
 const axios = require('axios');
 const URL = process.env.REACT_APP_API_URL;
-const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
-const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
 
 export const downloadData = async (dateRange, setDownloadable) => {
     console.log('starting download')
     const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
     const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
     try{
+        const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
+        const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
         const { data: packageData } = await axios.post(
             URL + '/packagedata/getall',
             {
@@ -82,7 +82,8 @@ export const downloadData = async (dateRange, setDownloadable) => {
 
 async function parseZoneData(data, origin_zips, destination_zips){
     try{
-        
+        const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
+        const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
         const { data: zoneData } = await axios.post(
             `${URL}/dhl_zones/findone`,
             {
