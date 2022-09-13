@@ -22,6 +22,7 @@ export default function PriceAverages ({ setShowTable, data, method }) {
                     total_out_cost: temp.reduce((acc, curr) => acc + curr.total_out_cost, 0),
                     avg_in_price: temp.reduce((acc, curr) => acc + curr.avg_in_price, 0) / temp.length,
                     avg_out_cost: temp.reduce((acc, curr) => acc + curr.avg_out_cost, 0) / temp.length,
+                    avg_weight: temp.reduce((acc, curr) => acc + curr.avg_weight || 0, 0) / temp.length,
                 }
                 newData.push(tempObj)
             }
@@ -52,7 +53,6 @@ export default function PriceAverages ({ setShowTable, data, method }) {
                     {zoneData.length > 0 && <table className='table-auto w-full text-lg'>
                         <tbody>
                             <tr className='font-bold'>
-                                <td> </td>
                                 {Object.keys(zoneData[0]).map((key, index) => {
                                     return <td key={index}>{key.split('_').join(' ')}</td>
                                 })}
@@ -60,7 +60,6 @@ export default function PriceAverages ({ setShowTable, data, method }) {
                             {zoneData.map((zone, index) => {
                                 return(
                                     <tr key={index}>
-                                        <td>{index + 1}</td>
                                         {Object.values(zone).map((value, index) => {
                                             return <td key={index}>{value}</td>
                                         })}
