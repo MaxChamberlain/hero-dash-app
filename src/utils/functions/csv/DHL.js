@@ -33,7 +33,7 @@ export const downloadData = async (dateRange, setDownloadable) => {
             item.data.map(e => 
                 e.shipping_labels.map(x => {
                     return {
-                        "order_id": e.order_id,
+                        "order.order_id": e.order_id,
                         "order.order_number": e.order.order_number,
                         "order.total_price": e.order.total_price,
                         "order.shipping_price": e.order.shipping_lines.price,
@@ -53,18 +53,18 @@ export const downloadData = async (dateRange, setDownloadable) => {
         const csvDataFlat = csvData.flat(2)
 
         const csvHeaders = [
-            { label: "Order ID", key: "order_id" },
-            { label: "Order Number", key: "order.order_number" },
-            { label: "Order Total", key: "order.total_price" },
-            { label: "Order Shipping", key: "order.shipping_price" },
-            { label: "Order Tax", key: "order.tax_price" },
-            { label: "Carrier", key: "shipment.carrier" },
-            { label: "Cost", key: "shipment.cost" },
-            { label: "Tracking Number", key: "shipment.tracking_number" },
-            { label: "Ship Method", key: "shipment.ship_method" },
-            { label: "Method Name", key: "shipment.method_name" },
-            { label: "Weight", key: "shipment.weight" },
-            { label: "Shipment ID", key: "shipment.shipment_id" },
+            {label: 'order.order_id', key: 'order.order_id'},
+            {label: 'order.order_number', key: 'order.order_number'},
+            {label: 'order.total_price', key: 'order.total_price'},
+            {label: 'order.shipping_price', key: 'order.shipping_price'},
+            {label: 'order.tax_price', key: 'order.tax_price'},
+            {label: 'shipment.carrier', key: 'shipment.carrier'},
+            {label: 'shipment.cost', key: 'shipment.cost'},
+            {label: 'shipment.tracking_number', key: 'shipment.tracking_number'},
+            {label: 'shipment.ship_method', key: 'shipment.ship_method'},
+            {label: 'shipment.method_name', key: 'shipment.method_name'},
+            {label: 'shipment.weight', key: 'shipment.weight'},
+            {label: 'shipment.shipment_id', key: 'shipment.shipment_id'},
         ]
 
         console.log('parsed, now downloading')
