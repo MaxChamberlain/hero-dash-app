@@ -18,7 +18,6 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
     }
 
     const zone = zoneData.filter(e => {
-        console.log(data.find(x => x.id === selectedState.id))
         const zoneZone = e.zone.split(' ')[1]
         const stateZone = data.find(x => x.id === selectedState.id) ? data.find(x => x.id === selectedState.id).zone_number[0] : 0
         const stateZone2 = data.find(x => x.id === selectedState.id) ? data.find(x => x.id === selectedState.id).zone_number[data.find(x => x.id === selectedState.id).zone_number.length - 1] : 0
@@ -51,10 +50,10 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
     }
 
     return(
-        <div className="bg-white rounded ml-12 h-fit text-black text-lg w-2/3">
-            <div className="flex flex-col w-full bg-stone-200 text-center">
+        <div className="bg-white rounded h-fit text-black text-lg w-full">
+            <div className="flex flex-col w-full items-start bg-stone-200 text-center w-full">
                 {zone && <>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center w-full">
                     <div style={{
                         backgroundColor: color1,
                         width: '20px',
@@ -73,13 +72,25 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
                     }
                     <h1 className="text-2xl">{title}</h1>
                 </div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Packages Sent: <span>{zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 0} ({Math.round((stateOrders / (zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 1)) * 100)}%)</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Cost of Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 0} ({Math.round((stateSpentShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 1)) * 100)}%)</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Earned From Shipping: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 0} ({Math.round((stateEarnedShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 1)) * 100)}%)</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Cost of Shipping: <span>${zone.length > 0 ? zone[0].avg_out_cost : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Shipping: <span>${zone.length > 0 ? zone[0].avg_in_price : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Total Earned From Orders: <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_order_price, 0).toFixed(2) : 0}</span></div>
-                    <div className="text-center w-full mb-2 flex justify-between p-2">Average Earned From Orders: <span>${zone.length > 0 ? zone[0].avg_order_price : 0}</span></div>
+                <div className="flex justify-between w-full text-sm" style={{ fontSize: window.innerWidth < 1080 ? 12 : 18 }}>
+                    <div className="text-start w-full mb-2 flex items-center p-2 flex-col justify-between">Packages Sent: 
+                        <div className='bg-slate-300 w-5/6 h-0.5 my-2' style={{ borderRadius: '0 50% 50% 0' }}></div>
+                        <span className="text-start">{zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 0} ({Math.round((stateOrders / (zone.length > 0 ? zone.reduce((a, b) => a + b.packages_sent, 0) : 1)) * 100)}%)</span>
+                    </div>
+                    <div className="text-start w-full mb-2 flex items-center p-2 flex-col justify-between">Cost of Shipping: 
+                        <div className='bg-slate-300 w-5/6 h-0.5 my-2' style={{ borderRadius: '0 50% 50% 0' }}></div>
+                        <span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 0} ({Math.round((stateSpentShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_out_cost, 0) : 1)) * 100)}%)</span>
+                    </div>
+                        <div className="text-start w-full mb-2 flex items-center p-2 flex-col justify-between">Earned From Shipping: 
+                        <div className='bg-slate-300 w-5/6 h-0.5 my-2' style={{ borderRadius: '0 50% 50% 0' }}></div><span>${zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 0} ({Math.round((stateEarnedShip / (zone.length > 0 ? zone.reduce((a, b) => a + b.total_in_price, 0) : 1)) * 100)}%)</span>
+                    </div>
+                        <div className="text-start w-full mb-2 flex items-center p-2 flex-col justify-between">Average Cost of Shipping: 
+                        <div className='bg-slate-300 w-5/6 h-0.5 my-2' style={{ borderRadius: '0 50% 50% 0' }}></div><span>${zone.length > 0 ? zone[0].avg_out_cost : 0}</span>
+                    </div>
+                        <div className="text-start w-full mb-2 flex items-center p-2 flex-col justify-between">Average Earned From Shipping: 
+                        <div className='bg-slate-300 w-5/6 h-0.5 my-2' style={{ borderRadius: '0 50% 50% 0' }}></div><span>${zone.length > 0 ? zone[0].avg_in_price : 0}</span>
+                    </div>
+                </div>
                 </>
                 }
             </div>

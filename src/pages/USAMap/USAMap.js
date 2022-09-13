@@ -24,7 +24,7 @@ export default function USAMap(){
                     Map
                 </div>
                 <div className='bg-slate-300 w-5/6 h-0.5 -mb-8' style={{ borderRadius: '0 50% 50% 0' }}></div>
-                <div className='w-full flex justify-between mt-24'>
+                <div className='w-full flex flex-col items-center justify-between mt-24'>
                     <KeyModal data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} />
                     <Map data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} />
                 </div>

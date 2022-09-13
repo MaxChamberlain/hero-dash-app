@@ -5,7 +5,7 @@ import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function OrdersSentChart() {
+export default function OrdersSentChart({ data }) {
 
     const zoneColors = {
         0: '#ccc',
@@ -19,9 +19,6 @@ export default function OrdersSentChart() {
         8: '#26a664',
         9: '#62bd39',
         10: '#a5b55c',
-        11: '#4c6b9c',
-        12: '#f2b400',
-        13: '#f2b400',
     }
 
     const PickDataContext = useContext(PickDatacontext)
@@ -38,14 +35,14 @@ export default function OrdersSentChart() {
         return(
             <>
                 <ResponsiveContainer width='100%' height='100%'>
-                    <BarChart data={PickDataContext.dhlZoneData}>
+                    <BarChart data={data}>
                         <Tooltip content={CustomTooltip} />
                         <Legend content={CustomizedLegend} />
                         <XAxis dataKey="zone" />
                         <YAxis />
                         <Bar dataKey='packages_sent'>
                             {
-                                PickDataContext.dhlZoneData.map((entry, index) => {
+                                data.map((entry, index) => {
                                     return <Cell key={`cell-${index}`} fill={zoneColors[entry.zone.split(' ')[1]]} />
                                 })
                             }

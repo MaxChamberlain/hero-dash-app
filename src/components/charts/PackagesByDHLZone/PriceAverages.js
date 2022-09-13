@@ -5,15 +5,15 @@ import { CustomTooltip } from '../../../assets/graphs/Tooltip';
 import Loading from '../../Loading';
 const { PickDatacontext } = require('../../../contexts/DataContext');
 
-export default function PriceAverages () {
+export default function PriceAverages ({ data }) {
     const [zoneData, setZoneData] = useState([]);
     const PickDataContext = useContext(PickDatacontext)
 
     useEffect(() => {
-        const zones = [...new Set(PickDataContext.dhlZoneData.map(zone => zone.zone))]
+        const zones = [...new Set(data.map(zone => zone.zone))]
         let newData = []
         zones.forEach(zone => {
-            let temp = PickDataContext.dhlZoneData.filter(zoneData => zoneData.zone === zone)
+            let temp = data.filter(zoneData => zoneData.zone === zone)
             if(zone){
                 let tempObj = {
                     zone: zone,
@@ -24,7 +24,7 @@ export default function PriceAverages () {
             }
         })
         setZoneData(newData)
-    }, [PickDataContext.dhlZoneData])
+    }, [data])
 
 
     if(PickDataContext.loading){

@@ -28,7 +28,7 @@ export default function DHLShipping() {
                     transition={{ duration: 0.2, delay: 0 }}
                 >
                     <CustDatePicker dateRange={packagesData.dateRange} setDateRange={packagesData.setDateRange} />
-                    <div className='w-full flex justify-between mt-24'>
+                    <div className='w-full flex-col flex items-center justify-between mt-24'>
                         <KeyModal data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} zoneData={packagesData.dhlZoneData} />
                         <Map data={packagesData.stateData} setSelectedState={setSelectedState} selectedState={selectedState} />
                     </div>

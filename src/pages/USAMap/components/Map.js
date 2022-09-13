@@ -27,7 +27,7 @@ const offsets = {
 export const Map = ({ data, selectedState, setSelectedState }) => {
 
   return (
-    <div className="w-full -mt-32">
+    <div style={{ width: window.innerWidth < 1080 ? '100%' : '67%', margin: '0 auto' }}>
       <ComposableMap projection="geoAlbersUsa">
         <Geographies geography={geoUrl}>
           {({ geographies }) => (
