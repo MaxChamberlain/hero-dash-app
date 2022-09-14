@@ -38,6 +38,9 @@ export const downloadData = async (dateRange, setDownloadable) => {
                         "order.total_price": e.order.total_price,
                         "order.shipping_price": e.order.shipping_lines.price,
                         "order.tax_price": e.order.total_tax,
+                        "order.created_at": e.created_date,
+                        "order.state": e.address.state,
+                        "order.zip": e.address.zip,
                         "shipment.carrier": x.carrier,
                         'shipment.cost': x.cost,
                         "shipment.tracking_number": x.tracking_number,
@@ -45,6 +48,7 @@ export const downloadData = async (dateRange, setDownloadable) => {
                         'shipment.method_name': x.shipping_name,
                         'shipment.weight': x.dimensions?.weight || 0,
                         'shipment.shipment_id': x.shipment_id,
+                        'shipment.dhl_zone': item.zone,
                     }
                 })
             )
@@ -58,6 +62,9 @@ export const downloadData = async (dateRange, setDownloadable) => {
             {label: 'order.total_price', key: 'order.total_price'},
             {label: 'order.shipping_price', key: 'order.shipping_price'},
             {label: 'order.tax_price', key: 'order.tax_price'},
+            {label: 'order.created_at', key: 'order.created_at'},
+            {label: 'order.state', key: 'order.state'},
+            {label: 'order.zip', key: 'order.zip'},
             {label: 'shipment.carrier', key: 'shipment.carrier'},
             {label: 'shipment.cost', key: 'shipment.cost'},
             {label: 'shipment.tracking_number', key: 'shipment.tracking_number'},
@@ -65,6 +72,7 @@ export const downloadData = async (dateRange, setDownloadable) => {
             {label: 'shipment.method_name', key: 'shipment.method_name'},
             {label: 'shipment.weight', key: 'shipment.weight'},
             {label: 'shipment.shipment_id', key: 'shipment.shipment_id'},
+            {label: 'shipment.dhl_zone', key: 'shipment.dhl_zone'},
         ]
 
         console.log('parsed, now downloading')

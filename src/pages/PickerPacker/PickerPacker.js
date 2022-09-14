@@ -9,8 +9,11 @@ import Speedometer from "./components/Speedometer";
 import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 const { PickDatacontext } = require('../../contexts/DataContext');
+const downloadIcon = require ('../../assets/images/download_icon.png');
+const { getData } = require('../../utils/functions/csv/PickPack');
 
 export default function HomePage(){
+    const [downloadable, setDownloadable] = useState(false)
     
     const {dateRange, setDateRange} = useContext(PickDatacontext)
 
@@ -23,6 +26,7 @@ export default function HomePage(){
             transition={{ duration: 0.2, delay: 0 }}
         >
             <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
+            {downloadable ? downloadable : <img src={downloadIcon} alt="download icon" className="absolute top-10 right-0 m-5 w-6 h-6 cursor-pointer" onClick={() => getData(dateRange, setDownloadable)} />}
             <div className="w-full flex justify-around">
                 <div className="w-full">
                     <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
