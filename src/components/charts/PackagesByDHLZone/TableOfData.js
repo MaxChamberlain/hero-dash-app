@@ -44,10 +44,10 @@ export default function PriceAverages ({ setShowTable, data, method }) {
                 <div className='p-4 w-11/12 bg-slate-800 rounded'>
                     <div className='flex justify-center items-center relative mb-8'>
                         <div className='text-2xl font-bold'>Zone Data ({method})</div>
-                        {downloadable ? 
+                        {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canExportData) && (downloadable ? 
                             downloadable :
                             <img src={downloadIcon} alt='download' className='cursor-pointer invert w-6 ml-5 opacity-80' onClick={() => downloadData(PickDataContext.dateRange, setDownloadable)} />
-                        }
+                        )}
                         <div className='absolute right-4 top-0 cursor-pointer text-2xl' onClick={() => setShowTable(false)}>x</div>
                     </div>
                     {zoneData.length > 0 && <table className='table-auto w-full text-lg'>

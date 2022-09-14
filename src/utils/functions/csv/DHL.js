@@ -78,6 +78,7 @@ export const downloadData = async (dateRange, setDownloadable) => {
         console.log('parsed, now downloading')
         
         setDownloadable(<CSVDownload data={csvDataFlat} headers={csvHeaders} filename={`ViDash_DHL_${startDate.slice(0,10)}_${endDate.slice(0,10)}.csv`} />)
+        setTimeout(() => setDownloadable(null), 100)
         
     }catch(e){
         if(e.response.status === 403){

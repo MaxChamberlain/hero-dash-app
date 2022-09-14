@@ -26,7 +26,7 @@ export default function HomePage(){
             transition={{ duration: 0.2, delay: 0 }}
         >
             <CustDatePicker dateRange={dateRange} setDateRange={setDateRange} />
-            {downloadable ? downloadable : <img src={downloadIcon} alt="download icon" className="absolute top-10 right-0 m-5 w-6 h-6 cursor-pointer" onClick={() => getData(dateRange, setDownloadable)} />}
+            {(JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canExportData) && (downloadable ? downloadable : <img src={downloadIcon} alt="download icon" className="absolute top-10 right-0 m-5 w-6 h-6 cursor-pointer" onClick={() => getData(dateRange, setDownloadable)} />)}
             <div className="w-full flex justify-around">
                 <div className="w-full">
                     <PickerPerformanceModal dateRange={dateRange} setDateRange={setDateRange} />
