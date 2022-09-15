@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import General from './components/General';
 import Users from './components/Users';
 import CompanySettings from './components/CompanySettings';
+import Help from './components/Help';
 
 export default function Settings(){
     // get url params
@@ -42,11 +43,13 @@ export default function Settings(){
                     <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'general' ? 'bg-slate-200' : ''}`} onClick={() => setPage('general')}>General</div>
                     {canManage && <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'users' ? 'bg-slate-200' : ''}`} onClick={() => setPage('users')}>Users</div>}
                     {isAdmin && <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'Company Settings' ? 'bg-slate-200' : ''}`} onClick={() => setPage('Company Settings')}>Company Settings</div>}
+                    <div className={`text-slate-900 font-bold p-2 rounded text-lg cursor-pointer ${page === 'help' ? 'bg-slate-200' : ''}`} onClick={() => setPage('help')}>Help</div>
                 </div>
                 <div className='bg-slate-50 w-full md:ml-5 rounded p-2 flex flex-col md:text-xs'>
                     {page === 'general' && <General />}
                     {page === 'users' && (canManage) && <Users users={users} />}
                     {page === 'Company Settings' && isAdmin && <CompanySettings />}
+                    {page === 'help' && <Help />}
                 </div>
             </div>
         </motion.div>

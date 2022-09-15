@@ -18,6 +18,8 @@ import USAMap from './pages/USAMap/USAMap';
 import PicksDataContext from './contexts/DataContext';
 import CompanyContext from './contexts/CompanyContext';
 import { useEffect } from 'react';
+import HelpArticle from './pages/HelpArticle/HelpArticle';
+import LoopReturns from './pages/LoopReturns/LoopReturns';
 
 
 function App() {
@@ -80,11 +82,13 @@ function App() {
                     <Settings /> : 
                     <Navigate replace to={'/'} />
                   } />
+                <Route path='/help/:page' element={<HelpArticle />} />
                 <Route path='/user/:id' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canManage ? <User /> : <Navigate replace to={"/"} />} />
                 <Route path='/kpis/picking_and_packing' element={<PickerPacker />} />
                 <Route path='/kpis/packages_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <Packages /> : <Navigate replace to={"/"} />} />
                 <Route path='/kpis/dhl_shipping' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <DHLShipping /> : <Navigate replace to={"/"} />} />
                 <Route path='/kpis/country_map' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <USAMap /> : <Navigate replace to={"/"} />} />
+                <Route path='/returns/loop' element={JSON.parse(localStorage.getItem('@ViDash:_userInfo')) && (JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin) ? <LoopReturns /> : <Navigate replace to={"/"} />} />
                 <Route path='/resetpassword' element={<ResetPassword />} />
                 <Route path='/reset' element={<FuncReset />} />
               </Routes>

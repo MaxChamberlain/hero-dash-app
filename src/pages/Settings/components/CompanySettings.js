@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Switch } from "@mui/material"
 const { changeRefreshToken } = require('../utils/changeRefreshToken');
-const { getCompany, changeUseDHL } = require('../../../utils/functions/companyHandler/getCompany');
+const { getCompany, changeUseDHL, changeUseLoopReturns } = require('../../../utils/functions/companyHandler/getCompany');
 
 export default function CompanySettings(){
     const [ refresh_token, setRefreshToken ] = useState('');
@@ -40,6 +40,15 @@ export default function CompanySettings(){
                     <Switch
                         checked={company ? company.uses_dhl : false}
                         onChange={(e) => changeUseDHL(e.target.checked, setCompany)}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        size='large'
+                    />
+                </div>
+                <div className='flex flex-col md:flex-row justify-between w-1/2 mb-5'>
+                    <p className='text-base'>Uses Loop For Returns?</p>
+                    <Switch
+                        checked={company ? company.uses_loop_returns : false}
+                        onChange={(e) => changeUseLoopReturns(e.target.checked, setCompany)}
                         inputProps={{ 'aria-label': 'controlled' }}
                         size='large'
                     />

@@ -12,7 +12,7 @@ export default function CustDatePicker({setDateRange, dateRange}){
                 <div>
                     Start Date
                 </div>
-                <DatePicker value={dateRange.startDate} onChange={(date) => setDateRange(was => {
+                <DatePicker clearIcon={null} value={dateRange.startDate} onChange={(date) => setDateRange(was => {
                     return {
                         ...was,
                         startDate: new Date(date),
@@ -24,7 +24,7 @@ export default function CustDatePicker({setDateRange, dateRange}){
                 <div>
                     End Date
                 </div>
-                <DatePicker value={dateRange.endDate} onChange={(date) => setDateRange(was => {
+                <DatePicker clearIcon={null} value={dateRange.endDate} onChange={(date) => setDateRange(was => {
                     return {
                         ...was,
                         endDate: new Date(date),
@@ -46,8 +46,7 @@ export default function CustDatePicker({setDateRange, dateRange}){
                 })
                 setTimeout(() => {
                     setDateRange(dates)
-                }
-                , 100)
+                }, 100)
             }}
             />
         </div>

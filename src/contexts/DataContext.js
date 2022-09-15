@@ -6,6 +6,7 @@ import { getData as getTotals } from "../utils/functions/getTotals"
 import { getData as getCarrierData} from "../utils/functions/temp_get_db_carrier_data"
 import { getData as getMethodData } from "../utils/functions/temp_get_db_method_data"
 import { getData as getStateData } from "../utils/functions/temp_get_db_state_data"
+import { getData as getLoopReturnsData } from "../utils/functions/temp_get_db_loop_returns_data"
 
 export const PickDatacontext = createContext()
 
@@ -23,51 +24,7 @@ export default function PicksDataContext({ children }){
     const [methodData, setMethodData] = useState([]);
     const [dhlZoneData, setDhlZoneData] = useState([]);
     const [stateData, setStateData] = useState([]);
-
-    useEffect(() => {
-        let refreshData
-        if(localStorage.getItem('@ViDash:_userInfo')){
-            refreshData = async () => {
-                getData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                    setPickData(data.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
-                    setPackData(data.sort((a, b) => (a.items_packed < b.items_packed) ? 1 : -1))
-                })
-
-                getPersonData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                    setPickerPersonData(data)
-                })
-
-                getPackageDataConsolidated(dateRange, setLoading, setError).then(data => {
-                    setPackagesDataConsolidated(data)
-                })
-
-                getTotals(dateRange, setLoading, setError).then(data => {
-                    setTotalsData(data)
-                })
-
-                getCarrierData(dateRange, setLoading, setError).then(data => {
-                    setCarrierData(data)
-                })
-
-                getMethodData(dateRange, setLoading, setError).then(data => {
-                    setMethodData(data)
-                })
-
-                getStateData(dateRange, setLoading, setError).then(data => {
-                    setStateData(data)
-                })
-
-                if(localStorage.getItem('@ViDash:_userInfo')){
-                    require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
-                        setDhlZoneData(data)
-                    })  
-                }
-            }
-        }
-        if(localStorage.getItem('@ViDash:_userInfo')){
-            refreshData()
-        }
-    }, [])
+    const [loopReturnsData, setLoopReturnsData] = useState([]);
 
     useEffect(() => {
         const refreshData = async () => {
@@ -94,6 +51,10 @@ export default function PicksDataContext({ children }){
 
             getStateData(dateRange, setLoading, setError).then(data => {
                 setStateData(data)
+            })
+
+            getLoopReturnsData(dateRange, setLoading, setError).then(data => {
+                setLoopReturnsData(data)
             })
 
             if(localStorage.getItem('@ViDash:_userInfo')){
@@ -129,6 +90,7 @@ export default function PicksDataContext({ children }){
                 dhlZoneData, setDhlZoneData,
                 stateData, setStateData,
                 packagesDataConsolidated, setPackagesDataConsolidated,
+                loopReturnsData, setLoopReturnsData,
                 dateRange, setDateRange, 
                 loading, setLoading, 
                 error, setError
