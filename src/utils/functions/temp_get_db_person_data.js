@@ -44,7 +44,12 @@ const FAKE_NAMES = [
 ]
 
 export const getData = async (startDate, endDate, setLoading, setError) => {
-    setLoading(true)
+    setLoading(was => {
+        return {
+            ...was,
+            person_data: true
+        }
+    })
     const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
     const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
     startDate = new Date(startDate.setHours(0,0,0,0))
@@ -127,8 +132,12 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
                 displayName: name.toLowerCase() === `${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).first_name.toLowerCase()} ${JSON.parse(localStorage.getItem('@ViDash:_userInfo')).last_name.toLowerCase()}` ? name + ' (You)' : FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)]
             }
         })
-
-        setLoading(false)
+        setLoading(was => {
+            return {
+                ...was,
+                person_data: false
+            }
+        })
 
         return newData
     }catch(err){

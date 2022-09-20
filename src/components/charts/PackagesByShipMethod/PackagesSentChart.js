@@ -9,7 +9,7 @@ export default function packagesSentChart() {
 
     const PickDataContext = useContext(PickDatacontext)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.method_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

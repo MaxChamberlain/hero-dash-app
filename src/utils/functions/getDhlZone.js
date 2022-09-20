@@ -6,6 +6,12 @@ const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).compa
 export const getDHLZone = async (dateRange, setLoading, setError) => {
     const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
     const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
+    setLoading(was => {
+        return {
+            ...was,
+            dhl_zone_data: true
+        }
+    })
     try{
         const { data: packageData } = await axios.post(
             URL + '/packagedata/getall',
@@ -26,6 +32,12 @@ export const getDHLZone = async (dateRange, setLoading, setError) => {
         const uniqueDestinationZips = [...new Set(packageData.map(item => item.address.zip.slice(0,3)))].filter(e => e)
 
         const newData = await parseZoneData(packageData, uniqueOriginZips, uniqueDestinationZips)
+        setLoading(was => {
+            return {
+                ...was,
+                dhl_zone_data: false
+            }
+        })
         return newData
     }catch(e){
         if(e.response.status === 403){

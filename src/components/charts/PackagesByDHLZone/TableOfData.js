@@ -30,7 +30,7 @@ export default function PriceAverages ({ setShowTable, data, method }) {
         setZoneData(newData)
     }, [data])
     
-        if(PickDataContext.loading){
+        if(PickDataContext.loading.dhl_zone_data){
             return <Loading />
         }else if(PickDataContext.error){
             return(

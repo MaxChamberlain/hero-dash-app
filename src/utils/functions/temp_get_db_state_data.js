@@ -8,7 +8,12 @@ export async function getData(dateRange, setLoading, setError){
     const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
     const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
     try{
-        setLoading(true)
+        setLoading(was => {
+            return {
+                ...was,
+                state_data: true
+            }
+        })
         const { data } = await axios.post(
             URL + '/packagedata/getall',
             {
@@ -29,7 +34,12 @@ export async function getData(dateRange, setLoading, setError){
         const uniqueStates = getUniqueStates(data)
         const zoneData = await getDHLZones(data, uniqueOriginZips, uniqueDestinationZips)
         let newData = parseData(zoneData, uniqueStates)
-        setLoading(false)
+        setLoading(was => {
+            return {
+                ...was,
+                state_data: false
+            }
+        })
         return newData
     }catch(e){
         if(e.response.status === 403 && window.location.href !== '/settings'){

@@ -26,7 +26,7 @@ export default function PriceAverages ({ dateRange, setDateRange, setShowTable }
         setCarrierData(newData)
     }, [PickDataContext.carrierData])
     
-        if(PickDataContext.loading){
+        if(PickDataContext.loading.carrier_data){
             return <Loading />
         }else if(PickDataContext.error){
             return(

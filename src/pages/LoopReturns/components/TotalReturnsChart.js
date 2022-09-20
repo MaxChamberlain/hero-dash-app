@@ -10,7 +10,7 @@ export default function TotalReturnsChart() {
     const PickDataContext = useContext(PickDatacontext)
 
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.loop_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

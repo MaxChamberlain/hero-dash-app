@@ -9,7 +9,7 @@ export default function PickerPerformanceChart() {
 
     const PickDataContext = useContext(PickDatacontext)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

@@ -27,7 +27,7 @@ export default function PriceAverages ({ dateRange, setDateRange }) {
     }, [PickDataContext.methodData])
 
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.method_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

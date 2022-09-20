@@ -12,6 +12,7 @@ export const PickDatacontext = createContext()
 
 export default function PicksDataContext({ children }){
     const [dateRange, setDateRange] = useState({startDate: new Date(), endDate: new Date()});
+    const [autoRefresh, setAutoRefresh] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [pickData, setPickData] = useState([]);
@@ -26,43 +27,48 @@ export default function PicksDataContext({ children }){
     const [stateData, setStateData] = useState([]);
     const [loopReturnsData, setLoopReturnsData] = useState([]);
 
-    useEffect(() => {
-        const refreshData = async () => {
-            getData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                setPickData(data.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
-                setPackData(data.sort((a, b) => (a.items_packed < b.items_packed) ? 1 : -1))
-            })
+    const refreshData = async () => {
+        getData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
+            setPickData(data.sort((a, b) => (a.items_picked < b.items_picked) ? 1 : -1))
+            setPackData(data.sort((a, b) => (a.items_packed < b.items_packed) ? 1 : -1))
+        })
 
-            getPersonData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
-                setPickerPersonData(data)
-            })
+        getPersonData(dateRange.startDate, dateRange.endDate, setLoading, setError).then(data => {
+            setPickerPersonData(data)
+        })
 
-            getPackageDataConsolidated(dateRange, setLoading, setError).then(data => {
-                setPackagesDataConsolidated(data)
-            })
+        getPackageDataConsolidated(dateRange, setLoading, setError).then(data => {
+            setPackagesDataConsolidated(data)
+        })
 
-            getTotals(dateRange, setLoading, setError).then(data => {
-                setTotalsData(data)
-            })
+        getTotals(dateRange, setLoading, setError).then(data => {
+            setTotalsData(data)
+        })
 
-            getCarrierData(dateRange, setLoading, setError).then(data => {
-                setCarrierData(data)
-            })
+        getCarrierData(dateRange, setLoading, setError).then(data => {
+            setCarrierData(data)
+        })
 
-            getStateData(dateRange, setLoading, setError).then(data => {
-                setStateData(data)
-            })
+        getStateData(dateRange, setLoading, setError).then(data => {
+            setStateData(data)
+        })
 
-            getLoopReturnsData(dateRange, setLoading, setError).then(data => {
-                setLoopReturnsData(data)
-            })
+        getLoopReturnsData(dateRange, setLoading, setError).then(data => {
+            setLoopReturnsData(data)
+        })
 
-            if(localStorage.getItem('@ViDash:_userInfo')){
-                require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
-                    setDhlZoneData(data)
-                })  
-            }
+        getMethodData(dateRange, setLoading, setError).then(data => {
+            setMethodData(data)
+        })
+
+        if(localStorage.getItem('@ViDash:_userInfo')){
+            require("../utils/functions/getDhlZone").getDHLZone(dateRange, setLoading, setError).then(data => {
+                setDhlZoneData(data)
+            })  
         }
+    }
+
+    useEffect(() => {
         if(localStorage.getItem('@ViDash:_userInfo')){
             refreshData()
         }
@@ -70,6 +76,17 @@ export default function PicksDataContext({ children }){
             dateRange.endDate = dateRange.startDate
         }
     }, [dateRange])
+
+    useEffect(() => {
+        let interval
+        if(autoRefresh){
+            interval = setInterval(() => {
+                refreshData()
+            }, 5000)
+        }else{
+            clearInterval(interval)
+        }
+    }, [autoRefresh])
 
     useEffect(() => {
         if(error){
@@ -92,6 +109,7 @@ export default function PicksDataContext({ children }){
                 packagesDataConsolidated, setPackagesDataConsolidated,
                 loopReturnsData, setLoopReturnsData,
                 dateRange, setDateRange, 
+                autoRefresh, setAutoRefresh,
                 loading, setLoading, 
                 error, setError
                 }}>

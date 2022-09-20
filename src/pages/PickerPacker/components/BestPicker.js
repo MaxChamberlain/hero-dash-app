@@ -14,7 +14,7 @@ export default function BestPicker() {
     const PickDataContext = useContext(PickDatacontext)
     const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.person_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(
@@ -46,7 +46,7 @@ export default function BestPicker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Packages Picked</div>
+                                    <div>Orders Picked</div>
                                     {PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].orders_picked} items
                                 </div>
                             </div>
@@ -61,7 +61,7 @@ export default function BestPicker() {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Items Picked</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].items_picked} packages
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.items_picked - a.items_picked)[0].items_picked} Orders
                                 </div>
                             </div>
                             
@@ -99,7 +99,7 @@ export default function BestPicker() {
                                     borderRadius: '50%',
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
-                                    <div>Packages Picked</div>
+                                    <div>Orders Picked</div>
                                     {PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].orders_picked} items
                                 </div>
                             </div>
@@ -114,7 +114,7 @@ export default function BestPicker() {
                                 }}></div>
                                 <div className='flex flex-col mt-5'>
                                     <div>Items Picked</div>
-                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].items_picked} Packages
+                                    {PickDataContext.pickerPersonData.sort((a, b) => b.orders_picked - a.orders_picked)[0].items_picked} orders
                                 </div>
                             </div>
                             

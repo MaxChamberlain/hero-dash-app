@@ -27,7 +27,7 @@ export default function PriceTotals () {
     }, [PickDataContext.carrierData])
 
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.carrier_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

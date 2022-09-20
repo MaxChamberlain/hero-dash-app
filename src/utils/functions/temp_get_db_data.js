@@ -4,7 +4,12 @@ const URL = process.env.REACT_APP_API_URL
 export const getData = async (startDate, endDate, setLoading, setError) => {
     const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
     const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
-    setLoading(true)
+    setLoading(was => {
+        return {
+            ...was,
+            data: true
+        }
+    })
     startDate = new Date(startDate.setHours(0,0,0,0))
     endDate = new Date(endDate.setHours(23,59,59,999))
     try{
@@ -55,7 +60,12 @@ export const getData = async (startDate, endDate, setLoading, setError) => {
         })
 
 
-        setLoading(false)
+        setLoading(was => {
+            return {
+                ...was,
+                data: false
+            }
+        })
         return newData
     }catch(err){
         if(err.response.status === 403){

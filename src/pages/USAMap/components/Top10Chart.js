@@ -14,7 +14,7 @@ export default function Top10Chart() {
     const top10byorderprice = PickDataContext.stateData.sort((a, b) => b.total_order_price - a.total_order_price).slice(0,10)
     const top10byavgorderprice = PickDataContext.stateData.sort((a, b) => b.avg_order_price - a.avg_order_price).slice(0,10)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.package_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

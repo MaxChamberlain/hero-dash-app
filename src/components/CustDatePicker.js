@@ -1,13 +1,26 @@
 import DatePicker from 'react-date-picker';
+import { Switch } from '@mui/material'
+import { useContext } from 'react';
+const { PickDatacontext } = require('../contexts/DataContext');
 const refresh_icon = require('../assets/images/refresh_icon.png');
 
 export default function CustDatePicker({setDateRange, dateRange}){
+    const {autoRefresh, setAutoRefresh} = useContext(PickDatacontext)
+
     return(
         <div style={{
             display: 'flex',
             color: 'black',
             fontSize: 15
         }}>
+            <div className='flex flex-col items-center justify-center mr-6 text-sm'>
+                Auto Refresh
+                <Switch
+                    checked={autoRefresh}
+                    onChange={() => setAutoRefresh(was => !was)}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                />
+            </div>
             <div>
                 <div>
                     Start Date

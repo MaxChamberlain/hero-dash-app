@@ -7,7 +7,7 @@ export default function CustSpeedometer({ dateRange, setDateRange }) {
 
     const PickDataContext = useContext(PickDatacontext)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

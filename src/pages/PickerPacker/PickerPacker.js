@@ -6,7 +6,7 @@ import CustDatePicker from "../../components/CustDatePicker";
 import BestPicker from "./components/BestPicker";
 import BestPacker from "./components/BestPacker";
 import Speedometer from "./components/Speedometer";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 const { PickDatacontext } = require('../../contexts/DataContext');
 const downloadIcon = require ('../../assets/images/download_icon.png');

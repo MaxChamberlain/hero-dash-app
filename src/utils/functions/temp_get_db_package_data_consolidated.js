@@ -3,7 +3,12 @@ const URL = process.env.REACT_APP_API_URL
 
 export async function getData(dateRange, setLoading, setError) {
     try{
-        setLoading(true)
+        setLoading(was => {
+            return {
+                ...was,
+                package_consolidated_data: true
+            }
+        })
         const token = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).token
         const company_code = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).company_code
         const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
@@ -33,7 +38,12 @@ export async function getData(dateRange, setLoading, setError) {
             'avg_out_(Loss)': Math.round(data.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / data.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,
             }
         )
-        setLoading(false)
+        setLoading(was => {
+            return {
+                ...was,
+                package_consolidated_data: false
+            }
+        })
         return newData
     }catch(e){
         if(e.response.status === 403 && window.location.href !== '/settings'){

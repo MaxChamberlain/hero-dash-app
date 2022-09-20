@@ -11,7 +11,7 @@ export default function USAMap(){
     const [selectedState, setSelectedState] = useState('')
     const packagesData = useContext(PickDatacontext);
 
-    if (packagesData.loading) {
+    if (packagesData.loading.package_data) {
         return <Loading />;
     } else if (packagesData.error) {
         return <div className="text-red">Error</div>;

@@ -6,7 +6,7 @@ export default function Totals() {
 
     const PickDataContext = useContext(PickDatacontext)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.package_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(

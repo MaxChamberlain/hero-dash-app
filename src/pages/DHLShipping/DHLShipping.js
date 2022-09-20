@@ -13,7 +13,7 @@ export default function DHLShipping() {
     const { company } = useContext(CompanyContext);
     const packagesData = useContext(PickDatacontext);
 
-    if (packagesData.loading || !company) {
+    if (packagesData.loading.dhl_zone_data || !company) {
         return <Loading />;
     } else if (packagesData.error) {
         return <div className="text-red">Error</div>;

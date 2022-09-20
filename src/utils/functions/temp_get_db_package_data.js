@@ -3,7 +3,12 @@ const URL = process.env.REACT_APP_API_URL
 
 export async function getData(company_code, dateRange, setLoading, setError){
     try{
-        setLoading(true)
+        setLoading(was => {
+            return {
+                ...was,
+                package_data: true
+            }
+        })
         const token = JSON.parse(localStorage.getItem('token')).token
         const company_code = JSON.parse(localStorage.getItem('token')).company_code
         const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
@@ -47,7 +52,12 @@ export async function getData(company_code, dateRange, setLoading, setError){
             }
             return 0
         })
-        setLoading(false)
+        setLoading(was => {
+            return {
+                ...was,
+                package_data: false
+            }
+        })
         return newData
     }catch(e){
         if(e.response.status === 403 && window.location.href !== '/settings'){

@@ -26,7 +26,7 @@ export default function OrdersSentChart({ data }) {
 
     const PickDataContext = useContext(PickDatacontext)
 
-    if(PickDataContext.loading){
+    if(PickDataContext.loading.dhl_zone_data){
         return <Loading />
     }else if(PickDataContext.error){
         return(
