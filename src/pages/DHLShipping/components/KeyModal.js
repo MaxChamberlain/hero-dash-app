@@ -45,7 +45,7 @@ export const KeyModal = ({ data, selectedState, zoneData }) => {
             title = zone[0].zone + ' & ' + zone[1].zone
         }
         if(selectedState){
-            title += ' (' + selectedState.properties.name + ')'
+            title = selectedState.properties.name + ' (' + title + ') '
         }
     }
 
