@@ -66,7 +66,7 @@ async function parseZoneData(data, origin_zips, destination_zips){
         )
 
         const uniqueZones = [...new Set(zoneData.map(item => item.zone_number))]
-        const uniqueShipMethods = [...new Set(data.map(item => item.shipping_labels[0].shipping_method))]
+        const uniqueShipMethods = [...new Set(data.filter(item => item.shipping_labels[0]?.shipping_method).map(item => item.shipping_labels[0].shipping_method))]
         const packagesPerZone = uniqueZones.map(zone => {
             const filteredData = data.filter(item => zoneData.filter(e => e.zone_number === zone).map(e => e.destination_zip).includes(item.address.zip.slice(0,3)))
             return {
@@ -78,7 +78,7 @@ async function parseZoneData(data, origin_zips, destination_zips){
                 avg_in_price: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.order.shipping_lines.price || 0), 0) / filteredData.length * 100) / 100,
                 avg_weight: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels?.weight) || 0, 0) / filteredData.length * 100) / 100,
                 ship_methods: uniqueShipMethods.map(method => {
-                    const filteredMethod = filteredData.filter(item => item.shipping_labels[0].shipping_method === method)
+                    const filteredMethod = filteredData.filter(item => item.shipping_labels[0]?.shipping_method && item.shipping_labels[0].shipping_method === method)
                     return {
                         method: method,
                         packages_sent: filteredMethod.length || 0,

@@ -62,8 +62,8 @@ export const Map = ({ data, selectedState, setSelectedState }) => {
                     <svg>
                         <defs>
                             <linearGradient id={`grad${i}`}>
-                                <stop offset="0" stop-color={leftColor}/>
-                                <stop offset="1" stop-color={rightColor}/>
+                                <stop offset="0" stopColor={leftColor}/>
+                                <stop offset="1" stopColor={rightColor}/>
                             </linearGradient>
                         </defs>
                     </svg>

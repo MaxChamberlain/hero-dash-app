@@ -92,7 +92,7 @@ async function getDHLZones (packageData, origin_zip, destination_zip){
             }
         )
         
-        const dataWithZones = packageData.map(item => {
+        const dataWithZones = packageData.filter(e => e.warehouse?.address).map(item => {
             const originZip = item.warehouse.address.zip.slice(0,3)
             const destinationZip = item.address.zip.slice(0,3)
             const zone = zoneData.find(e => e.origin_zip === originZip && e.destination_zip === destinationZip)
