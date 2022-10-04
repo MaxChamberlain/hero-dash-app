@@ -25,24 +25,32 @@ export default function CustDatePicker({setDateRange, dateRange}){
                 <div>
                     Start Date
                 </div>
-                <DatePicker clearIcon={null} value={dateRange.startDate} onChange={(date) => setDateRange(was => {
+                <DatePicker clearIcon={null} value={dateRange.startDate} onChange={(date) => {
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('startDate', new Date(date).toLocaleDateString('en-US'));
+                window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+                    setDateRange(was => {
                     return {
                         ...was,
                         startDate: new Date(date),
                     }
-                })} />
+                })}} />
             </div>
 
             <div style={{ marginLeft: 10, }}>
                 <div>
                     End Date
                 </div>
-                <DatePicker clearIcon={null} value={dateRange.endDate} onChange={(date) => setDateRange(was => {
+                <DatePicker clearIcon={null} value={dateRange.endDate} onChange={(date) => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('endDate', new Date(date).toLocaleDateString('en-US'));
+                    window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+                    setDateRange(was => {
                     return {
                         ...was,
                         endDate: new Date(date),
                     }
-                })} />
+                })}} />
             </div>
             <img src={refresh_icon} style={{
                 width: 30,

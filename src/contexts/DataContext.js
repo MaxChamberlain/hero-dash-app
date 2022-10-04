@@ -11,7 +11,7 @@ import { getData as getLoopReturnsData } from "../utils/functions/temp_get_db_lo
 export const PickDatacontext = createContext()
 
 export default function PicksDataContext({ children }){
-    const [dateRange, setDateRange] = useState({startDate: new Date('9/1/22'), endDate: new Date('9/1/22')});
+    const [dateRange, setDateRange] = useState({startDate: new Date(), endDate: new Date()});
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -84,6 +84,7 @@ export default function PicksDataContext({ children }){
         if(dateRange.startDate > dateRange.endDate){
             dateRange.endDate = dateRange.startDate
         }
+        
     }, [dateRange])
 
     useEffect(() => {
