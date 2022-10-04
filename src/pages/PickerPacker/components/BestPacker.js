@@ -13,6 +13,7 @@ export default function BestPacker() {
 
     const PickDataContext = useContext(PickDatacontext)
     const canDrillDown = JSON.parse(localStorage.getItem('@ViDash:_userInfo')).canDrillDown || JSON.parse(localStorage.getItem('@ViDash:_userInfo')).isAdmin
+    console.log(PickDataContext.loading)
 
     if(PickDataContext.loading.person_data){
         return <Loading />

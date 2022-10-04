@@ -7,8 +7,6 @@ export async function getData(dateRange, setLoading, setError){
     const startDate = new Date(dateRange.startDate.setHours(0,0,0,0)).toISOString()
     const endDate = new Date(dateRange.endDate.setHours(23,59,59,999)).toISOString()
     try{
-        setLoading(true)
-
         const { data } = await axios.post(
             URL + '/packagedata/getall',
             {
@@ -36,7 +34,6 @@ export async function getData(dateRange, setLoading, setError){
             }
             return 0
         })
-        setLoading(false)
         return newData
     }catch(e){
         setError(e.response.data.message)

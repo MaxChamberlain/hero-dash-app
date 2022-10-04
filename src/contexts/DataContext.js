@@ -11,7 +11,7 @@ import { getData as getLoopReturnsData } from "../utils/functions/temp_get_db_lo
 export const PickDatacontext = createContext()
 
 export default function PicksDataContext({ children }){
-    const [dateRange, setDateRange] = useState({startDate: new Date(), endDate: new Date()});
+    const [dateRange, setDateRange] = useState({startDate: new Date('9/1/22'), endDate: new Date('9/1/22')});
     const [autoRefresh, setAutoRefresh] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -67,6 +67,15 @@ export default function PicksDataContext({ children }){
             })  
         }
     }
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const startDate = urlParams.get('startDate');
+        const endDate = urlParams.get('endDate');
+        if(startDate && endDate){
+            setDateRange({startDate: new Date(startDate), endDate: new Date(endDate)})
+        }
+    }, [])
 
     useEffect(() => {
         if(localStorage.getItem('@ViDash:_userInfo')){
