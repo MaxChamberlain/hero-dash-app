@@ -63,7 +63,7 @@ function getCarrierData(data){
     carriers.forEach(e => {
         let filteredData = carrierData.filter(item => item.shipping_labels[0].carrier === e)
             retObj.push({
-                carrier: e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' ').slice(0,3) === 'Dhl' ? 'DHL' : e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' '),
+                carrier: (e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' ').slice(0,3) === 'Dhl' ? 'DHL' : e.split('_').map(l => l[0].toUpperCase() + l.slice(1)).join(' ')),
                 packages_sent: filteredData.reduce((a, b) => a + b.shipping_labels.length, 0),
                 total_out_cost: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100) / 100,
                 avg_out_cost: Math.round(filteredData.reduce((a, b) => a + parseFloat(b.shipping_labels.reduce((a, b) => a + b.cost, 0)), 0) * 100 / filteredData.reduce((a, b) => a + b.shipping_labels.length, 0)) / 100,

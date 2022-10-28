@@ -15,7 +15,7 @@ export default function PackagesByDHLZoneModal({ dateRange, setDateRange }) {
     const dataContext = useContext(PickDatacontext);
 
     useEffect(() => {
-        if(dataContext.dhlZoneData.length > 0){const methods = [...new Set(dataContext.dhlZoneData[0].ship_methods.map(e => e.method))];
+        if(dataContext.dhlZoneData.length > 0){const methods = [...new Set(dataContext.dhlZoneData[0].ship_methods.map(e => e.method.replace('EXP', 'DHL SmartMail Parcel Expedited')))];
         setMethods(methods);}
     }, [dataContext.dhlZoneData]);
 
@@ -24,7 +24,7 @@ export default function PackagesByDHLZoneModal({ dateRange, setDateRange }) {
             setData(dataContext.dhlZoneData);
         } else {
             setData(dataContext.dhlZoneData.map(e => {
-                const shipMethodsInObj = e.ship_methods.filter(e => e.method === method);
+                const shipMethodsInObj = e.ship_methods.filter(e => e.method.replace('EXP', 'DHL SmartMail Parcel Expedited') === method);
                 const returnObj = {
                     zone: e.zone,
                     packages_sent: shipMethodsInObj.reduce((acc, curr) => acc + curr.packages_sent, 0),
